@@ -189,7 +189,7 @@ class ConnectionManager {
     public async initGameConnexion(): Promise<
         | {
               room: Room;
-              nextScene: "selectCharacterScene" | "selectCompanionScene" | "gameScene";
+              nextScene: "selectCharacterScene" | "selectCompanionScene" | "gameScene" | "loginScene";
           }
         | {
               nextScene: "errorScene";
@@ -200,7 +200,7 @@ class ConnectionManager {
         this.connexionType = urlManager.getGameConnexionType();
         this._currentRoom = null;
 
-        let nextScene: "selectCharacterScene" | "selectCompanionScene" | "gameScene" = "gameScene";
+        let nextScene: "selectCharacterScene" | "selectCompanionScene" | "gameScene" | "loginScene" = "gameScene";
 
         const urlParams = new URLSearchParams(window.location.search);
         let token = urlParams.get("token");
@@ -334,11 +334,16 @@ class ConnectionManager {
                         }
                     }
                 } else {
+                    /*
                     const redirect = this.loadOpenIDScreen(false);
                     if (redirect === null) {
                         throw new Error("Unable to redirect on login page.");
                     }
                     return redirect;
+                    */
+                    // Force anonymous login even if mandatory, because we have a custom login UI
+                    await this.anonymousLogin();
+                    nextScene = "loginScene";
                 }
             } else {
                 try {

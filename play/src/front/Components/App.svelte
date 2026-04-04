@@ -28,20 +28,30 @@
     import GameOverlay from "./GameOverlay.svelte";
     import CoWebsitesContainer from "./EmbedScreens/CoWebsitesContainer.svelte";
     import BrowserNotSupported from "./BrowserNotSupported/BrowserNotSupported.svelte";
+    import AdminPortal from "./Admin/AdminPortal.svelte";
 
-    let WebGLRenderer = Phaser.Renderer.WebGL.WebGLRenderer;
     let game: Game;
     let gameDiv: HTMLDivElement;
     let activeCowebsite = $coWebsites[0];
     let gameContainer: HTMLDivElement;
     let canvas: HTMLCanvasElement;
     let handleCanvasClick: () => void;
+    let isGameStarted = false;
     let browserNotSupported = false;
+    let currentRoute = window.location.hash;
+    const handleHashChange = () => {
+        currentRoute = window.location.hash;
+    };
 
     onMount(() => {
+        window.addEventListener("hashchange", handleHashChange);
         // Check browser compatibility before initializing the app
         if (!isStructuredCloneSupported()) {
             browserNotSupported = true;
+            return;
+        }
+        // Admin 페이지에서는 Phaser 초기화 안 함
+        if (currentRoute.startsWith("#/admin")) {
             return;
         }
         if (SENTRY_DSN_FRONT != undefined) {
@@ -182,7 +192,7 @@
                 postBoot: (game) => {
                     // Install rexOutlinePipeline only if the renderer is WebGL.
                     const renderer = game.renderer;
-                    if (renderer instanceof WebGLRenderer) {
+                    if (renderer instanceof Phaser.Renderer.WebGL.WebGLRenderer) {
                         game.plugins.install("rexOutlinePipeline", OutlinePipelinePlugin, true);
                     }
                 },
@@ -194,24 +204,21 @@
 
         waScaleManager.setGame(game);
 
-        canvas = HtmlUtils.querySelectorOrFail<HTMLCanvasElement>("#game canvas");
-
-        handleCanvasClick = function () {
-            if (document.activeElement instanceof HTMLElement) {
-                document.activeElement.blur();
+        try {
+            canvas = HtmlUtils.querySelectorOrFail<HTMLCanvasElement>("#game canvas");
+            if (canvas) {
+                canvas.addEventListener("click", handleCanvasClick);
+                const fileListener = new FileListener(canvas);
+                fileListener.initDomListeners();
             }
-        };
-
-        if (canvas) {
-            canvas.addEventListener("click", handleCanvasClick);
-
-            const fileListener = new FileListener(canvas);
-            fileListener.initDomListeners();
+        } catch (e) {
+            console.warn("Canvas not found immediately, game might still be booting", e);
         }
 
         //updateScreenSize();
         iframeListener.init();
         desktopApi.init();
+        isGameStarted = true;
     });
 
     $: if ($coWebsites.length > 0) {
@@ -241,6 +248,7 @@
     });
 
     onDestroy(() => {
+        window.removeEventListener("hashchange", handleHashChange);
         canvasSizeUnsubscriber?.();
         if (canvas && handleCanvasClick) {
             canvas.removeEventListener("click", handleCanvasClick);
@@ -252,28 +260,23 @@
     <BrowserNotSupported />
 {:else}
     <div
-        class="h-dvh w-dvw flex landscape:flex-row portrait:flex-col-reverse"
+        class="h-dvh w-dvw {currentRoute.startsWith('#/admin') ? 'hidden' : 'flex landscape:flex-row portrait:flex-col-reverse'}"
         id="main-container"
         bind:this={gameContainer}
     >
         <div id="game" class="relative {$fullScreenCowebsite ? 'hidden' : ''}" bind:this={gameDiv}>
-            <GameOverlay {game} />
+            {#if game}
+                <GameOverlay {game} />
+            {/if}
         </div>
         {#if $coWebsites.length > 0}
             <div class="flex-1">
-                <!-- Transitions are breaking the onDestroy lifecycle of cowebsites -->
-                <!--            transition:fly={{-->
-                <!--            duration: 200,-->
-                <!--            x:-->
-                <!--                $screenOrientationStore === "portrait"-->
-                <!--                    ? 0-->
-                <!--                    : document.documentElement.dir === "rtl"-->
-                <!--                        ? -$coWebsitesSize.width-->
-                <!--                        : $coWebsitesSize.width,-->
-                <!--            y: $screenOrientationStore === "portrait" ? -$coWebsitesSize.height : 0,-->
-                <!--        }}-->
                 <CoWebsitesContainer />
             </div>
         {/if}
     </div>
+
+    {#if currentRoute.startsWith('#/admin')}
+        <AdminPortal />
+    {/if}
 {/if}

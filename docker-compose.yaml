@@ -61,7 +61,7 @@ services:
       ENABLE_MAP_EDITOR: "$ENABLE_MAP_EDITOR"
       HOST: "0.0.0.0"
       NODE_ENV: development
-      ALLOWED_CORS_ORIGIN: "http://play.workadventure.localhost"
+      ALLOWED_CORS_ORIGIN: "*"
       VITE_URL: "http://front.workadventure.localhost"
       PUSHER_URL: http://play.workadventure.localhost
       FRONT_URL: http://play.workadventure.localhost
@@ -263,6 +263,14 @@ services:
       - "traefik.http.routers.back.entryPoints=web"
       - "traefik.http.routers.back.service=back"
       - "traefik.http.services.back.loadbalancer.server.port=8080"
+
+      # New: Proxied router on the main play domain to avoid DNS/Hosts issues
+      - "traefik.http.routers.back-proxied.rule=Host(`play.workadventure.localhost`) && PathPrefix(`/admin-api`)"
+      - "traefik.http.routers.back-proxied.entryPoints=web"
+      - "traefik.http.routers.back-proxied.priority=100"
+      - "traefik.http.routers.back-proxied.service=back"
+      - "traefik.http.middlewares.admin-api-strip.stripprefix.prefixes=/admin-api"
+      - "traefik.http.routers.back-proxied.middlewares=admin-api-strip"
 
   map-storage:
     image: thecodingmachine/nodejs:v2-22-bullseye

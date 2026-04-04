@@ -2,52 +2,52 @@ import type { Translation } from "../i18n-types";
 
 export default {
     welcome: {
-        title: "{worldName}에 오신 것을 환영합니다! 🚀",
+        title: "{worldName} (AI 캠프 27기 아지트)에 오신 걸 환영합니다! 🚀",
         description:
-            "이동하고, 다른 사람들과 채팅하고, 실시간으로 협업할 수 있는 가상 세계를 탐험할 준비를 하세요. 시작하는 데 도움이 되는 빠른 투어를 해봅시다!",
-        start: "시작합시다!",
-        skip: "튜토리얼 건너뛰기",
+            "동기들과 소통하고, 실시간으로 협업하며 함께 성장하는 가상 캠프장에 도착하셨습니다. 열공 모드로 들어가기 전, 간단한 튜토리얼을 시작해 볼까요?",
+        start: "캠프 투어 시작!",
+        skip: "이미 숙련자입니다 (건너뛰기)",
     },
     movement: {
-        title: "이동하기",
+        title: "아지트 탐색하기",
         descriptionDesktop:
-            "화살표 키 또는 WASD로 캐릭터를 이동할 수 있습니다. 마우스 오른쪽 버튼 클릭으로도 이동할 수 있습니다. 지금 이동해 보세요!",
-        descriptionMobile: "조이스틱이나 지도를 탭하여 캐릭터를 이동합니다. 지금 이동해 보세요!",
-        next: "다음",
+            "키보드 방향키 또는 WASD로 캐릭터를 움직여 보세요. 마우스 오른쪽 클릭으로도 원하는 위치로 이동할 수 있습니다. 지금 한 걸음 내디뎌 보세요!",
+        descriptionMobile: "조이스틱이나 지도를 터치해서 캐릭터를 이동시킵니다. 지금 바로 움직여 보세요!",
+        next: "다음 단계로",
     },
     communication: {
-        title: "통신 버블",
+        title: "옹기종기 대화 버블",
         description:
-            "다른 플레이어에게 가까이 가면 자동으로 통신 버블에 들어갑니다. 같은 버블의 다른 사람들과 채팅할 수 있습니다!",
+            "다른 동기에게 가까이 다가가면 자동으로 대화 버블(Communication Bubble)이 생성됩니다. 버블 안의 동기들과 음성/화상으로 자유롭게 수다를 떨어보세요!",
         video: "./static/Videos/Meet.mp4",
-        next: "알겠습니다!",
+        next: "오케이, 이해 완료!",
     },
     lockBubble: {
-        title: "대화 잠그기",
-        description: "잠금 버튼을 클릭하여 다른 사람이 대화 버블에 참여하지 못하도록 합니다. 비공개 토론에 유용합니다!",
+        title: "프라이빗 집중 모드 (잠금)",
+        description: "잠금 버튼을 누르면 우리끼리만 대화할 수 있어요. 팀 프로젝트나 비밀 스터디 시에 아주 유용하답니다!",
         video: "./static/Videos/LockBubble.mp4",
-        hint: "강조 표시된 잠금 버튼을 클릭하여 시도해 보세요!",
-        next: "다음",
+        hint: "강조된 자물쇠 아이콘을 눌러서 보안을 강화해 보세요!",
+        next: "다음 단계로",
     },
     screenSharing: {
-        title: "화면 공유하기",
-        description: "대화 버블의 다른 사람들과 화면을 공유합니다. 프레젠테이션 및 협업에 완벽합니다!",
+        title: "코드/화면 공유하기",
+        description: "내 화면을 동기들에게 실시간으로 보여줄 수 있어요. 페어 프로그래밍이나 코드 리뷰할 때 최고의 도구죠!",
         video: "./static/images/screensharing.mp4",
-        hint: "강조 표시된 화면 공유 버튼을 클릭하여 공유를 시작하세요!",
-        next: "다음",
+        hint: "강조된 화면 공유 아이콘을 눌러서 내 모니터를 중계해 보세요!",
+        next: "다음 단계로",
     },
     pictureInPicture: {
-        title: "Picture in Picture",
+        title: "PIP (강의 보며 이동하기)",
         description:
-            "Picture in Picture 모드를 사용하여 맵을 탐색하는 동안 화상 통화를 계속 볼 수 있습니다. 멀티태스킹에 좋습니다!",
+            "PIP 모드를 켜면 맵을 돌아다니면서도 동기의 얼굴이나 공유 화면을 구석에 띄워둘 수 있어요. 멀티태스킹의 필수템!",
         video: "./static/Videos/PictureInPicture.mp4",
-        hint: "강조 표시된 PiP 버튼을 클릭하여 활성화하세요!",
-        next: "다음",
+        hint: "강조된 PiP 아이콘을 눌러서 활성화해 보세요!",
+        next: "다음 단계로",
     },
     complete: {
-        title: "준비 완료! 🎉",
+        title: "출격 준비 완료! 🎉",
         description:
-            "{worldName}의 기본 사항을 배웠습니다! 자유롭게 탐험하고, 새로운 사람들을 만나고, 즐기세요. 필요할 때는 메뉴에서 항상 도움말에 액세스할 수 있습니다.",
-        finish: "탐험 시작하기!",
+            "{worldName}에서의 생존 수칙을 모두 익히셨습니다! 이제 자유롭게 탐험하며 새로운 인연을 만나고, 즐거운 캠프 생활을 만끽하세요. 도움이 필요하면 언제든 메뉴의 가이드를 찾아주세요.",
+        finish: "정글 속으로 (탐험 시작!)",
     },
 } satisfies Translation["onboarding"];

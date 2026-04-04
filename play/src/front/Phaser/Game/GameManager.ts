@@ -178,7 +178,11 @@ export class GameManager {
 
         if (this.playerName && localUserStore.getAuthToken() && shouldShowPwaInstall) {
             return PwaInstallSceneName;
-        } else if (!this.playerName || (this.startRoom.authenticationMandatory && !localUserStore.getAuthToken())) {
+        } else if (
+            !this.playerName ||
+            (this.startRoom.authenticationMandatory && !localUserStore.getAuthToken()) ||
+            nextScene === "loginScene"
+        ) {
             return LoginSceneName;
         } else if (nextScene === "selectCharacterScene") {
             return SelectCharacterSceneName;

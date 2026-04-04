@@ -16,6 +16,7 @@ import {
     GRPC_MAX_MESSAGE_SIZE,
 } from "./Enum/EnvironmentVariable";
 import { PingController } from "./Controller/PingController";
+import { AdminController } from "./Controller/AdminController";
 import { spaceManager } from "./SpaceManager";
 import { setCapabilities } from "./Services/Capabilities";
 
@@ -26,10 +27,27 @@ class App {
     private prometheusController: PrometheusController;
     private debugController: DebugController;
     private pingController: PingController;
+    private adminController: AdminController;
 
     constructor() {
         // Création de l'application principale
         this.app = express();
+
+        // CORS Middleware
+        this.app.use((req, res, next) => {
+            res.setHeader("Access-Control-Allow-Origin", "*");
+            res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+            res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
+            res.setHeader("Access-Control-Allow-Credentials", "true");
+
+            // Handle preflight
+            if (req.method === "OPTIONS") {
+                res.status(204).end();
+            } else {
+                next();
+            }
+        });
+
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
 
@@ -45,6 +63,7 @@ class App {
 
         this.debugController = new DebugController(this.app);
         this.pingController = new PingController(this.app);
+        this.adminController = new AdminController(this.app);
     }
 
     public listen(): void {

@@ -3,25 +3,25 @@ import type { Translation } from "../i18n-types";
 
 const error: DeepPartial<Translation["error"]> = {
     accessLink: {
-        title: "잘못된 접근 링크",
-        subTitle: "지도를 찾을 수 없습니다. 접근 링크를 확인하세요.",
-        details: "자세한 정보가 필요하면 관리자에게 문의하거나 hello@workadventu.re로 연락하세요",
+        title: "길을 잃은 코딩 미아 (잘못된 주소)",
+        subTitle: "아지트를 찾을 수 없습니다. 링크 주소가 올바른지 다시 한번 체크해 보세요!",
+        details: "도움이 필요하면 캠프 매니저님께 SOS를 치거나 hello@workadventu.re로 연락해 보세요.",
     },
     connectionRejected: {
-        title: "연결이 거부됨",
-        subTitle: "월드에 참여할 수 없습니다. 나중에 다시 시도하세요 {error}.",
-        details: "자세한 정보가 필요하면 관리자에게 문의하거나 hello@workadventu.re로 연락하세요",
+        title: "입구 컷! (연결 거부)",
+        subTitle: "아지트에 입장할 수 없습니다. 나중에 다시 시도해 주세요 {error}.",
+        details: "매니저님께 문의하거나 서버 상태를 확인해 보세요.",
     },
     connectionRetry: {
-        unableConnect: "서버 연결이 끊어졌습니다. 다른 사람들과 말할 수 없습니다.",
+        unableConnect: "서버와 연결이 툭 끊겼습니다. 동기들의 대화가 들리지 않아요! 😱",
     },
     errorDialog: {
-        title: "오류 😱",
-        hasReportIssuesUrl: "자세한 정보가 필요하면 관리자에게 문의하거나 다음에서 문제를 보고하세요:",
-        noReportIssuesUrl: "자세한 정보가 필요하면 월드 관리자에게 문의하세요.",
-        messageFAQ: "다음도 확인할 수 있습니다:",
-        reload: "새로 고침",
-        close: "닫기",
+        title: "🚨 멘탈 소생 시급 (에러 발생!)",
+        hasReportIssuesUrl: "상세 정보가 필요하면 매니저님께 문의하거나 다음 경로로 제보해 주세요:",
+        noReportIssuesUrl: "문제가 지속되면 캠프 운영진에게 긴급 SOS를 요청하세요.",
+        messageFAQ: "자주 묻는 질문(FAQ)도 정주행해 보세요:",
+        reload: "F5(새로고침)로 심폐소생",
+        close: "창 닫기",
     },
 };
 

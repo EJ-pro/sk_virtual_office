@@ -24,6 +24,7 @@ export class LoginScene extends ResizableScene {
 
     create() {
         loginSceneVisibleIframeStore.set(false);
+        /*
         //If authentication is mandatory, push authentication iframe
         if (
             localUserStore.getAuthToken() == undefined &&
@@ -36,9 +37,10 @@ export class LoginScene extends ResizableScene {
             }
             loginSceneVisibleIframeStore.set(true);
         }
+        */
         loginSceneVisibleStore.set(true);
 
-        if (gameManager.currentStartedRoom.backgroundColor != undefined) {
+        if (gameManager.currentStartedRoom?.backgroundColor != undefined) {
             this.cameras.main.setBackgroundColor(gameManager.currentStartedRoom.backgroundColor);
         }
     }
