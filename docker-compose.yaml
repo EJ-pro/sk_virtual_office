@@ -5,19 +5,34 @@ services:
       - "8080"
     ports:
       - "80:80"
+      - "443:443"
     command:
       - --api.insecure=true
       - --providers.docker
       - --entryPoints.web.address=:80
+      - --entryPoints.websecure.address=:443
       - --providers.docker.exposedbydefault=false
+      - --certificatesresolvers.le.acme.email=${ACME_EMAIL}
+      - --certificatesresolvers.le.acme.storage=/letsencrypt/acme.json
+      - --certificatesresolvers.le.acme.httpchallenge.entrypoint=web
       #- --log.level=DEBUG
     labels:
       - "traefik.enable=true"
       - "traefik.port=8080"
-      - "traefik.http.routers.traefik.rule=Host(`traefik.workadventure.localhost`)"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.sk-camp.cloud`)"
+      - "traefik.http.routers.traefik.entrypoints=websecure"
+      - "traefik.http.routers.traefik.tls=true"
+      - "traefik.http.routers.traefik.tls.certresolver=le"
       - "traefik.http.routers.traefik.service=api@internal"
+      
+      # HTTP to HTTPS Redirect
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)"
+      - "traefik.http.routers.http-catchall.entrypoints=web"
+      - "traefik.http.routers.http-catchall.middlewares=redirect-to-https"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./letsencrypt:/letsencrypt
     networks:
       default:
         aliases:
@@ -62,11 +77,11 @@ services:
       HOST: "0.0.0.0"
       NODE_ENV: development
       ALLOWED_CORS_ORIGIN: "*"
-      VITE_URL: "http://front.workadventure.localhost"
-      PUSHER_URL: http://play.workadventure.localhost
-      FRONT_URL: http://play.workadventure.localhost
-      UPLOADER_URL: http://uploader.workadventure.localhost
-      ICON_URL: http://icon.workadventure.localhost
+      VITE_URL: "https://front.sk-camp.cloud"
+      PUSHER_URL: https://play.sk-camp.cloud
+      FRONT_URL: https://play.sk-camp.cloud
+      UPLOADER_URL: https://uploader.sk-camp.cloud
+      ICON_URL: https://icon.sk-camp.cloud
       STUN_SERVER: "${STUN_SERVER:-}"
       TURN_SERVER: "${TURN_SERVER:-}"
       DISABLE_NOTIFICATIONS: "$DISABLE_NOTIFICATIONS"
@@ -80,7 +95,7 @@ services:
       MAX_USERNAME_LENGTH: "$MAX_USERNAME_LENGTH"
       OPENID_CLIENT_ID: authorization-code-client-id
       OPENID_CLIENT_SECRET: authorization-code-client-secret
-      OPENID_CLIENT_ISSUER: http://oidc.workadventure.localhost
+      OPENID_CLIENT_ISSUER: https://oidc.sk-camp.cloud
       OPENID_PROFILE_SCREEN_PROVIDER: ${OPENID_PROFILE_SCREEN_PROVIDER:-}
       OPENID_SCOPE: profile openid email tags-scope
       OPENID_PROMPT: ${OPENID_PROMPT:-}
@@ -95,7 +110,7 @@ services:
       API_URL: back:50051
       DISABLE_ANONYMOUS: $DISABLE_ANONYMOUS
       #Map editor
-      PUBLIC_MAP_STORAGE_URL: "http://map-storage.workadventure.localhost"
+      PUBLIC_MAP_STORAGE_URL: "https://map-storage.sk-camp.cloud"
       INTERNAL_MAP_STORAGE_URL: "http://map-storage:3000"
       REDIS_HOST: redis
       ENABLE_OPENAPI_ENDPOINT: "true"
@@ -156,10 +171,10 @@ services:
       MINIMUM_DISTANCE: "${MINIMUM_DISTANCE}"
       #Chat
       MATRIX_API_URI: http://synapse:8008/
-      MATRIX_PUBLIC_URI: http://matrix.workadventure.localhost
+      MATRIX_PUBLIC_URI: https://matrix.sk-camp.cloud
       MATRIX_ADMIN_USER: admin
       MATRIX_ADMIN_PASSWORD: MySecretPassword
-      MATRIX_DOMAIN: matrix.workadventure.localhost
+      MATRIX_DOMAIN: matrix.sk-camp.cloud
       # oEmbed providers
       EMBEDLY_KEY: "$EMBEDLY_KEY"
       # Map editor restrictions (allow all users when OIDC is enabled by default)
@@ -172,22 +187,34 @@ services:
     labels:
       - "traefik.enable=true"
 
-      - "traefik.http.routers.front.rule=Host(`front.workadventure.localhost`)"
+      - "traefik.http.routers.front.rule=Host(`front.sk-camp.cloud`)"
+      - "traefik.http.routers.front.entrypoints=websecure"
+      - "traefik.http.routers.front.tls=true"
+      - "traefik.http.routers.front.tls.certresolver=le"
       - "traefik.http.routers.front.service=front"
       - "traefik.http.services.front.loadbalancer.server.port=8080"
 
-      - "traefik.http.routers.room-api.rule=Host(`room-api.workadventure.localhost`)"
+      - "traefik.http.routers.room-api.rule=Host(`room-api.sk-camp.cloud`)"
+      - "traefik.http.routers.room-api.entrypoints=websecure"
+      - "traefik.http.routers.room-api.tls=true"
+      - "traefik.http.routers.room-api.tls.certresolver=le"
       - "traefik.http.routers.room-api.service=room-api"
       - "traefik.http.services.room-api.loadbalancer.server.port=50051"
       - "traefik.http.services.room-api.loadbalancer.server.scheme=h2c"
 
       - "traefik.http.routers.play.rule=HostRegexp(`^.+$`)"
       - "traefik.http.routers.play.priority=1"
+      - "traefik.http.routers.play.entrypoints=websecure"
+      - "traefik.http.routers.play.tls=true"
+      - "traefik.http.routers.play.tls.certresolver=le"
       - "traefik.http.routers.play.service=play"
       - "traefik.http.services.play.loadbalancer.server.port=3000"
 
       - "traefik.http.routers.play-ws.rule=HostRegexp(`^.+$`) && PathPrefix(`/ws/`)"
       - "traefik.http.routers.play-ws.priority=2"
+      - "traefik.http.routers.play-ws.entrypoints=websecure"
+      - "traefik.http.routers.play-ws.tls=true"
+      - "traefik.http.routers.play-ws.tls.certresolver=le"
       - "traefik.http.routers.play-ws.service=play-ws"
       - "traefik.http.services.play-ws.loadbalancer.server.port=3001"
 
@@ -197,7 +224,7 @@ services:
       DEBUG_MODE: "$DEBUG_MODE"
       HOST: "0.0.0.0"
       NODE_ENV: development
-      FRONT_URL: http://play.workadventure.localhost
+      FRONT_URL: https://play.sk-camp.cloud
       #APACHE_DOCUMENT_ROOT: dist/
       #APACHE_EXTENSIONS: headers
       #APACHE_EXTENSION_HEADERS: 1
@@ -207,8 +234,10 @@ services:
       - ./maps:/var/www/html
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.maps.rule=Host(`maps.workadventure.localhost`)"
-      - "traefik.http.routers.maps.entryPoints=web,traefik"
+      - "traefik.http.routers.maps.rule=Host(`maps.sk-camp.cloud`)"
+      - "traefik.http.routers.maps.entrypoints=websecure"
+      - "traefik.http.routers.maps.tls=true"
+      - "traefik.http.routers.maps.tls.certresolver=le"
       - "traefik.http.services.maps.loadbalancer.server.port=80"
 
   back:
@@ -217,7 +246,7 @@ services:
     working_dir: /usr/src/app/back
     environment:
       #DEBUG: "*"
-      PLAY_URL: http://play.workadventure.localhost
+      PLAY_URL: https://play.sk-camp.cloud
       MINIMUM_DISTANCE: "${MINIMUM_DISTANCE}"
       GROUP_RADIUS: "${GROUP_RADIUS}"
       # On startup, we ask the messages container to regenerate the files.
@@ -243,7 +272,7 @@ services:
       STORE_VARIABLES_FOR_LOCAL_MAPS: "true"
       PROMETHEUS_AUTHORIZATION_TOKEN: "$PROMETHEUS_AUTHORIZATION_TOKEN"
       MAP_STORAGE_URL: "map-storage:50053"
-      PUBLIC_MAP_STORAGE_URL: "http://map-storage.workadventure.localhost"
+      PUBLIC_MAP_STORAGE_URL: "https://map-storage.sk-camp.cloud"
       INTERNAL_MAP_STORAGE_URL: "http://map-storage:3000"
       PLAYER_VARIABLES_MAX_TTL: $PLAYER_VARIABLES_MAX_TTL
       ENABLE_CHAT: "$ENABLE_CHAT"
@@ -259,14 +288,18 @@ services:
       - "9232:9229"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.back.rule=Host(`api.workadventure.localhost`)"
-      - "traefik.http.routers.back.entryPoints=web"
+      - "traefik.http.routers.back.rule=Host(`api.sk-camp.cloud`)"
+      - "traefik.http.routers.back.entrypoints=websecure"
+      - "traefik.http.routers.back.tls=true"
+      - "traefik.http.routers.back.tls.certresolver=le"
       - "traefik.http.routers.back.service=back"
       - "traefik.http.services.back.loadbalancer.server.port=8080"
 
       # New: Proxied router on the main play domain to avoid DNS/Hosts issues
-      - "traefik.http.routers.back-proxied.rule=Host(`play.workadventure.localhost`) && PathPrefix(`/admin-api`)"
-      - "traefik.http.routers.back-proxied.entryPoints=web"
+      - "traefik.http.routers.back-proxied.rule=Host(`play.sk-camp.cloud`) && PathPrefix(`/admin-api`)"
+      - "traefik.http.routers.back-proxied.entrypoints=websecure"
+      - "traefik.http.routers.back-proxied.tls=true"
+      - "traefik.http.routers.back-proxied.tls.certresolver=le"
       - "traefik.http.routers.back-proxied.priority=100"
       - "traefik.http.routers.back-proxied.service=back"
       - "traefik.http.middlewares.admin-api-strip.stripprefix.prefixes=/admin-api"
@@ -295,7 +328,7 @@ services:
       SENTRY_RELEASE: ${SENTRY_RELEASE:-}
       PATH_PREFIX: ""
       MAP_STORAGE_API_TOKEN: "FFVSGBSGBSGFB23SFGBSFG4BS"
-      PUSHER_URL: http://play.workadventure.localhost
+      PUSHER_URL: https://play.sk-camp.cloud
       WHITELISTED_RESOURCE_URLS: ""
       SECRET_KEY: "$SECRET_KEY"
     volumes:
@@ -305,12 +338,16 @@ services:
       - "9233:9229"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.map-storage.rule=Host(`map-storage.workadventure.localhost`)"
-      - "traefik.http.routers.map-storage.entryPoints=web"
+      - "traefik.http.routers.map-storage.rule=Host(`map-storage.sk-camp.cloud`)"
+      - "traefik.http.routers.map-storage.entrypoints=websecure"
+      - "traefik.http.routers.map-storage.tls=true"
+      - "traefik.http.routers.map-storage.tls.certresolver=le"
       - "traefik.http.routers.map-storage.service=map-storage"
       - "traefik.http.services.map-storage.loadbalancer.server.port=3000"
-      - "traefik.http.routers.map-storage-ui.rule=Host(`map-storage.workadventure.localhost`) && PathPrefix(`/ui/`)"
-      - "traefik.http.routers.map-storage-ui.entryPoints=web"
+      - "traefik.http.routers.map-storage-ui.rule=Host(`map-storage.sk-camp.cloud`) && PathPrefix(`/ui/`)"
+      - "traefik.http.routers.map-storage-ui.entrypoints=websecure"
+      - "traefik.http.routers.map-storage-ui.tls=true"
+      - "traefik.http.routers.map-storage-ui.tls.certresolver=le"
       - "traefik.http.routers.map-storage-ui.service=map-storage-ui"
       - "traefik.http.services.map-storage-ui.loadbalancer.server.port=8080"
 
@@ -322,7 +359,7 @@ services:
     environment:
       DEBUG: "*"
       STARTUP_COMMAND_1: ../npm-install.sh
-      UPLOADER_URL: http://uploader.workadventure.localhost
+      UPLOADER_URL: https://uploader.sk-camp.cloud
       #AWS
       AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID:-}"
       AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY:-}"
@@ -343,8 +380,10 @@ services:
       - "9234:9229"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.uploader.rule=Host(`uploader.workadventure.localhost`)"
-      - "traefik.http.routers.uploader.entryPoints=web"
+      - "traefik.http.routers.uploader.rule=Host(`uploader.sk-camp.cloud`)"
+      - "traefik.http.routers.uploader.entrypoints=websecure"
+      - "traefik.http.routers.uploader.tls=true"
+      - "traefik.http.routers.uploader.tls.certresolver=le"
       - "traefik.http.services.uploader.loadbalancer.server.port=8080"
 
   messages:
@@ -367,16 +406,20 @@ services:
     image: redislabs/redisinsight:latest
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.redisinsight.rule=Host(`redis.workadventure.localhost`)"
-      - "traefik.http.routers.redisinsight.entryPoints=web"
+      - "traefik.http.routers.redisinsight.rule=Host(`redis.sk-camp.cloud`)"
+      - "traefik.http.routers.redisinsight.entrypoints=websecure"
+      - "traefik.http.routers.redisinsight.tls=true"
+      - "traefik.http.routers.redisinsight.tls.certresolver=le"
       - "traefik.http.services.redisinsight.loadbalancer.server.port=8001"
 
   icon:
     image: matthiasluedtke/iconserver:v3.21.0
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.icon.rule=Host(`icon.workadventure.localhost`)"
-      - "traefik.http.routers.icon.entryPoints=web"
+      - "traefik.http.routers.icon.rule=Host(`icon.sk-camp.cloud`)"
+      - "traefik.http.routers.icon.entrypoints=websecure"
+      - "traefik.http.routers.icon.tls=true"
+      - "traefik.http.routers.icon.tls.certresolver=le"
       - "traefik.http.services.icon.loadbalancer.server.port=8080"
 
   # A mock server to test OpenID connect connectivity
@@ -495,8 +538,10 @@ services:
       - ./contrib/oidc-server-mock:/tmp/config:ro
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.oidc.rule=Host(`oidc.workadventure.localhost`)"
-      - "traefik.http.routers.oidc.entryPoints=web"
+      - "traefik.http.routers.oidc.rule=Host(`oidc.sk-camp.cloud`)"
+      - "traefik.http.routers.oidc.entrypoints=websecure"
+      - "traefik.http.routers.oidc.tls=true"
+      - "traefik.http.routers.oidc.tls.certresolver=le"
     healthcheck:
       #disable: true
       timeout: 5s
@@ -509,19 +554,21 @@ services:
     entrypoint: /data/start.sh
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.matrix.rule=Host(`matrix.workadventure.localhost`)"
-      - "traefik.http.routers.matrix.entryPoints=web"
+      - "traefik.http.routers.matrix.rule=Host(`matrix.sk-camp.cloud`)"
+      - "traefik.http.routers.matrix.entrypoints=websecure"
+      - "traefik.http.routers.matrix.tls=true"
+      - "traefik.http.routers.matrix.tls.certresolver=le"
       - "traefik.http.services.matrix.loadbalancer.server.port=8008"
       - "traefik.http.routers.matrix.service=matrix"
     volumes:
       - ./synapse:/data/
       #- ./synapse/homeserver.template.yaml:/data/homeserver.template.yaml
-      - ./synapse/federation:/etc/nginx/vhost.d/matrix.workadventure.localhost
+      - ./synapse/federation:/etc/nginx/vhost.d/matrix.sk-camp.cloud
     environment:
-      VIRTUAL_HOST: "matrix.workadventure.localhost"
+      VIRTUAL_HOST: "matrix.sk-camp.cloud"
       VIRTUAL_PORT: 8008
-      LETSENCRYPT_HOST: "matrix.workadventure.localhost"
-      SYNAPSE_SERVER_NAME: "matrix.workadventure.localhost"
+      LETSENCRYPT_HOST: "matrix.sk-camp.cloud"
+      SYNAPSE_SERVER_NAME: "matrix.sk-camp.cloud"
       SYNAPSE_REPORT_STATS: "yes"
       MATRIX_ADMIN_USER: admin
       MATRIX_ADMIN_PASSWORD: MySecretPassword
