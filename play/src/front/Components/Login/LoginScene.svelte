@@ -3,7 +3,7 @@
     import type { Game } from "../../Phaser/Game/Game";
     import type { LoginScene } from "../../Phaser/Login/LoginScene";
     import { LoginSceneName } from "../../Phaser/Login/LoginScene";
-    import logoImg from "../images/logo.svg";
+    import logoImg from "../images/PlayData_logo.svg";
     import poweredByWorkAdventureImg from "../images/Powered_By_WorkAdventure_Big.png";
     import bgMap from "../images/map-exemple.png";
     import { gameManager } from "../../Phaser/Game/GameManager";

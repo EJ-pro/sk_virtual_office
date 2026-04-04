@@ -43,7 +43,7 @@ import { setCurrentLocale } from "../Utils/locales";
 import { ABSOLUTE_PUSHER_URL } from "../Enum/ComputedConst";
 import { openChatRoom } from "../Chat/Utils";
 import LL from "../../i18n/i18n-svelte";
-import waLogo from "../Components/images/logo.svg";
+import waLogo from "../Components/images/PlayData_logo.svg";
 import { errorScreenStore } from "../Stores/ErrorScreenStore";
 import { axiosToPusher, axiosWithRetry } from "./AxiosUtils";
 import { Room } from "./Room";
@@ -188,13 +188,13 @@ class ConnectionManager {
      */
     public async initGameConnexion(): Promise<
         | {
-              room: Room;
-              nextScene: "selectCharacterScene" | "selectCompanionScene" | "gameScene" | "loginScene";
-          }
+            room: Room;
+            nextScene: "selectCharacterScene" | "selectCompanionScene" | "gameScene" | "loginScene";
+        }
         | {
-              nextScene: "errorScene";
-              error: ErrorApiErrorData | ErrorApiRetryData | ErrorApiUnauthorizedData | Error;
-          }
+            nextScene: "errorScene";
+            error: ErrorApiErrorData | ErrorApiRetryData | ErrorApiUnauthorizedData | Error;
+        }
         | URL
     > {
         this.connexionType = urlManager.getGameConnexionType();
@@ -271,11 +271,11 @@ class ConnectionManager {
             this._currentRoom = await Room.createRoom(
                 new URL(
                     window.location.protocol +
-                        "//" +
-                        window.location.host +
-                        roomUrl +
-                        (query ? "?" + query : "") + //use urlParams because the token param must be deleted
-                        window.location.hash
+                    "//" +
+                    window.location.host +
+                    roomUrl +
+                    (query ? "?" + query : "") + //use urlParams because the token param must be deleted
+                    window.location.hash
                 )
             );
             urlManager.pushRoomIdToUrl(this._currentRoom);
@@ -525,9 +525,9 @@ class ConnectionManager {
                 reject(
                     new Error(
                         "An error occurred while connecting to socket server. Retrying. Code: " +
-                            event.code +
-                            ", Reason: " +
-                            event.reason
+                        event.code +
+                        ", Reason: " +
+                        event.reason
                     )
                 );
             });

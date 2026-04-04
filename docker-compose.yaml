@@ -36,15 +36,13 @@ services:
     networks:
       default:
         aliases:
-          - "front.workadventure.localhost"
-          - "play.workadventure.localhost"
-          - "room-api.workadventure.localhost"
-          - "maps.workadventure.localhost"
-          - "oidc.workadventure.localhost"
-          - "map-storage.workadventure.localhost"
-          - "xmpp.workadventure.localhost"
-          - "matrix.workadventure.localhost"
-          - "pusher.workadventure.localhost"
+          - "front.sk-camp.cloud"
+          - "play.sk-camp.cloud"
+          - "room-api.sk-camp.cloud"
+          - "maps.sk-camp.cloud"
+          - "oidc.sk-camp.cloud"
+          - "map-storage.sk-camp.cloud"
+          - "pusher.sk-camp.cloud"
   play:
     image: thecodingmachine/nodejs:v2-20-bullseye
     command: npm run dev
@@ -202,16 +200,14 @@ services:
       - "traefik.http.services.room-api.loadbalancer.server.port=50051"
       - "traefik.http.services.room-api.loadbalancer.server.scheme=h2c"
 
-      - "traefik.http.routers.play.rule=HostRegexp(`^.+$`)"
-      - "traefik.http.routers.play.priority=1"
+      - "traefik.http.routers.play.rule=Host(`play.sk-camp.cloud`)"
       - "traefik.http.routers.play.entrypoints=websecure"
       - "traefik.http.routers.play.tls=true"
       - "traefik.http.routers.play.tls.certresolver=le"
       - "traefik.http.routers.play.service=play"
       - "traefik.http.services.play.loadbalancer.server.port=3000"
 
-      - "traefik.http.routers.play-ws.rule=HostRegexp(`^.+$`) && PathPrefix(`/ws/`)"
-      - "traefik.http.routers.play-ws.priority=2"
+      - "traefik.http.routers.play-ws.rule=Host(`play.sk-camp.cloud`) && PathPrefix(`/ws/`)"
       - "traefik.http.routers.play-ws.entrypoints=websecure"
       - "traefik.http.routers.play-ws.tls=true"
       - "traefik.http.routers.play-ws.tls.certresolver=le"

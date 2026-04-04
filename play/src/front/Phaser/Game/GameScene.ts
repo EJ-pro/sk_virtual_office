@@ -949,27 +949,36 @@ export class GameScene extends DirtyScene {
             console.warn("All scripts loaded");
         });*/
 
+        const mapInitializedWithTimeout = Promise.race([
+            this.gameMapFrontWrapper.initializedPromise.promise.then(() => {
+                console.info("Loading process: Game map initialized");
+                return "map_ready";
+            }),
+            new Promise((resolve) => setTimeout(resolve, 10000)).then(() => {
+                console.warn("Loading process: Game map initialization TIMEOUT (10s). Showing UI anyway.");
+                return "map_timeout";
+            }),
+        ]);
+
         Promise.all([
             this.connectionAnswerPromiseDeferred.promise.then(() =>
-                debug("Loading process: Websocket connection ready")
+                console.info("Loading process: Websocket connection ready")
             ),
             Promise.allSettled(scriptPromises).then((results) => {
-                debug("Loading process: Scripts loaded");
+                console.info("Loading process: Scripts loaded");
                 return results;
             }),
             this.CurrentPlayer.getTextureLoadedPromise().then(() =>
-                debug("Loading process: Current player texture ready")
+                console.info("Loading process: Current player texture ready")
             ) as Promise<unknown>,
-            this.gameMapFrontWrapper.initializedPromise.promise.then(() =>
-                debug("Loading process: Game map initialized")
-            ),
+            mapInitializedWithTimeout,
             // Wait at most 5 seconds for the chat connection to be established
             // If not, we can still proceed starting the scene without chat fully loaded
             raceTimeout(gameManager.getChatConnection(), 5_000)
-                .then(() => debug("Loading process: Chat connection ready"))
+                .then(() => console.info("Loading process: Chat connection ready"))
                 .catch((e) => {
                     if (e instanceof TimeoutError) {
-                        debug("Loading process: Chat connection timeout. Continuing loading while chat loads.");
+                        console.warn("Loading process: Chat connection timeout. Continuing loading while chat loads.");
                         return;
                     } else {
                         throw e;

@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onDestroy, onMount } from "svelte";
     import { LL } from "../../../i18n/i18n-svelte";
-    import logoImg from "../images/logo.svg";
+    import logoImg from "../images/PlayData_logo.svg";
     import bgMap from "../images/map-exemple.png";
     import poweredByWorkAdventureImg from "../images/Powered_By_WorkAdventure_Big.png";
     import { gameManager } from "../../Phaser/Game/GameManager";
