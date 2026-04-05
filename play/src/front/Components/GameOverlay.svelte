@@ -99,6 +99,9 @@
 {:else if $mapDeletedPromptStore}
     <MapDeletedPrompt />
 {:else if $gameSceneIsLoadedStore && !$loaderVisibleStore}
+    <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: red; color: white; padding: 20px; z-index: 9999; pointer-events: none; opacity: 0.8;">
+        UI BLOCK ACTIVE - MAIN LAYOUT SHOULD BE HERE
+    </div>
     {#if $refreshPromptStore}
         <RefreshPrompt />
     {/if}
@@ -135,7 +138,8 @@
     Err:{$errorStore.length} | 
     Login:{$loginSceneVisibleStore} | 
     Woka:{$selectCharacterSceneVisibleStore} | 
-    Cam:{$enableCameraSceneVisibilityStore}
+    Cam:{$enableCameraSceneVisibilityStore} |
+    DOM_UI:{typeof document !== 'undefined' ? !!document.getElementById('main-layout') : 'N/A'}
     <button style="background: red; color: white; margin-left: 10px; cursor: pointer;" on:click={() => {
         gameSceneIsLoadedStore.set(true);
         loaderVisibleStore.set(false);
