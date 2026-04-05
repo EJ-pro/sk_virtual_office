@@ -32,7 +32,7 @@
             (async () => {
                 if (src == "") {
                     try {
-                        HTMLAudioPlayer.pause();
+                        if (HTMLAudioPlayer) HTMLAudioPlayer.pause();
                     } catch (error) {
                         console.warn("The audio player is not paused, so we create a new one", error);
                     }
@@ -63,7 +63,7 @@
                 // Use paused attribute to manage audio
                 if (audioManager.paused || audioManager.stopped) {
                     try {
-                        HTMLAudioPlayer.pause();
+                        if (HTMLAudioPlayer) HTMLAudioPlayer.pause();
                     } catch (error) {
                         console.warn("The audio player is not paused, so we create a new one", error);
                     }

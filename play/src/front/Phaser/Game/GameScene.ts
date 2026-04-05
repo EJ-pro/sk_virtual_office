@@ -949,12 +949,16 @@ export class GameScene extends DirtyScene {
             console.warn("All scripts loaded");
         });*/
 
+        let timeoutId: ReturnType<typeof setTimeout> | undefined;
         const mapInitializedWithTimeout = Promise.race([
             this.gameMapFrontWrapper.initializedPromise.promise.then(() => {
+                if (timeoutId) clearTimeout(timeoutId);
                 console.info("Loading process: Game map initialized");
                 return "map_ready";
             }),
-            new Promise((resolve) => setTimeout(resolve, 10000)).then(() => {
+            new Promise((resolve) => {
+                timeoutId = setTimeout(resolve, 10000);
+            }).then(() => {
                 console.warn("Loading process: Game map initialization TIMEOUT (10s). Showing UI anyway.");
                 return "map_timeout";
             }),
@@ -1699,16 +1703,42 @@ export class GameScene extends DirtyScene {
     }
 
     private doLoadTMJFile(mapUrlFile: string): void {
-        this.load.on("filecomplete-tilemapJSON-" + mapUrlFile, (key: string, type: string, data: unknown) => {
-            this.onMapLoad(data).catch((e) => console.error(e));
-        });
-        this.load.tilemapTiledJSON(mapUrlFile, mapUrlFile);
-        // If the map has already been loaded as part of another GameScene, the "on load" event will not be triggered.
-        // In this case, we check in the cache to see if the map is here and trigger the event manually.
-        if (this.cache.tilemap.exists(mapUrlFile)) {
-            const data = this.cache.tilemap.get(mapUrlFile);
-            this.onMapLoad(data.data).catch((e) => console.error(e));
-        }
+        const absoluteUrl = new URL(mapUrlFile, window.location.href).toString();
+        
+        // Use axios to fetch the map JSON so we can ignore 404 status codes
+        this.superLoad.loadPromise(
+            axiosWithRetry.get(absoluteUrl, {
+                validateStatus: () => true, // Accept any status code (including 404)
+            }).then((response) => {
+                let data = response.data;
+                
+                // If it's a string, try to parse it (sometimes 404 responses are returned as text)
+                if (typeof data === "string") {
+                    try {
+                        data = JSON.parse(data);
+                    } catch (e) {
+                        throw new Error(`Failed to parse map JSON from ${mapUrlFile}. It might not be a valid map file.`);
+                    }
+                }
+
+                // If the map has already been loaded, remove it first to avoid duplicate cache keys if we are manually adding
+                if (this.cache.tilemap.exists(mapUrlFile)) {
+                    this.cache.tilemap.remove(mapUrlFile);
+                }
+
+                // Manually add to Phaser cache as if it was loaded by tilemapTiledJSON
+                this.cache.tilemap.add(mapUrlFile, { format: 1, data: data });
+                
+                return this.onMapLoad(data);
+            }).catch((error) => {
+                this.handleErrorAndCleanup(
+                    error,
+                    "MAP_FILE_LOAD_ISSUE",
+                    "Error when loading map file",
+                    `An error occurred while loading the map file "${mapUrlFile}". Please check the URL or contact the map administrator.`
+                );
+            })
+        );
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
