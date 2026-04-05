@@ -10,6 +10,7 @@ import ConnectionIssueToast from "../Components/Toasts/ConnectionIssueToast.svel
 
 export const axiosToPusher = axios.create({
     baseURL: ABSOLUTE_PUSHER_URL,
+    timeout: 15000,
 });
 
 /**
@@ -17,6 +18,17 @@ export const axiosToPusher = axios.create({
  */
 export const axiosWithRetry = axios.create({
     baseURL: ABSOLUTE_PUSHER_URL,
+    timeout: 15000,
+});
+
+axiosToPusher.interceptors.request.use((config) => {
+    console.info(`UI_DEBUG: API Request starting: ${config.url}`);
+    return config;
+});
+
+axiosWithRetry.interceptors.request.use((config) => {
+    console.info(`UI_DEBUG: API (Retryable) Request starting: ${config.url}`);
+    return config;
 });
 
 axiosRetry(axiosWithRetry, {

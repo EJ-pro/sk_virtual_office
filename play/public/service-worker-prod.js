@@ -21,44 +21,27 @@ self.addEventListener('install', function(event) {
     );
 });
 
-/*
 self.addEventListener('fetch', function(event) {
-    //TODO mamnage fetch data and cache management
+    // Basic pass-through to ensure requests aren't blocked, with a fallback to the original caching logic if needed
     event.respondWith(
-        caches.match(event.request)
+        fetch(event.request)
             .then(function(response) {
-                // Cache hit - return response
-                if (response) {
+                // Check if we received a valid response
+                if(!response || response.status !== 200 || response.type !== 'basic') {
                     return response;
                 }
 
-                return fetch(event.request).then(
-                    function(response) {
-                        // Check if we received a valid response
-                        if(!response || response.status !== 200 || response.type !== 'basic') {
-                            return response;
-                        }
-
-                        // IMPORTANT: Clone the response. A response is a stream
-                        // and because we want the browser to consume the response
-                        // as well as the cache consuming the response, we need
-                        // to clone it so we have two streams.
-                        var responseToCache = response.clone();
-
-                        caches.open(CACHE_NAME)
-                            .then(function(cache) {
-                                cache.put(event.request, responseToCache);
-                            });
-
-                        return response;
-                    }
-                );
+                // If you want to enable caching later, you can do it here. 
+                // For now, we just return the network response to fix the hang.
+                return response;
+            })
+            .catch(function() {
+                // If network fails, try to match from cache as a fallback
+                return caches.match(event.request);
             })
     );
 });
-*/
 
-/*
 self.addEventListener('wait', function(event) {
     //TODO wait
 });
@@ -70,4 +53,3 @@ self.addEventListener('update', function(event) {
 self.addEventListener('beforeinstallprompt', (e) => {
     //TODO change prompt
 });
-*/

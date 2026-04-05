@@ -21,9 +21,9 @@ self.addEventListener('install', function(event) {
     );
 });
 
-/*
-self.addEventListener('fetch', () => {
-    //never cache data will be stored in dev mode
+self.addEventListener('fetch', (event) => {
+    // Basic pass-through for development to ensure requests aren't blocked
+    event.respondWith(fetch(event.request));
 });
 
 self.addEventListener('wait', function(event) {
@@ -37,5 +37,4 @@ self.addEventListener('update', function(event) {
 self.addEventListener('beforeinstallprompt', (e) => {
     //TODO change prompt
 });
-*/
 
