@@ -5,7 +5,7 @@
     import type { ChatMessageContent } from "../../../Connection/ChatConnection";
     import { sanitizeHTML } from "./WA-HTML-Sanitizer";
     export let content: Readable<ChatMessageContent>;
-    export let hasDepth: false;
+    export let hasDepth = false;
 
     const dispatch = createEventDispatcher<{
         updateMessageBody: void;

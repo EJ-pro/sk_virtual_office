@@ -997,7 +997,7 @@ export class GameScene extends DirtyScene {
                 // can be retried), we retry loading the failed scripts.
 
                 Promise.allSettled(
-                    settledScriptLoadedResult.map((result) => {
+                    settledScriptLoadedResult.map((result: PromiseSettledResult<void>) => {
                         if (result.status === "rejected") {
                             if (result.reason instanceof ScriptLoadedError) {
                                 return result.reason.retry();
@@ -1018,6 +1018,9 @@ export class GameScene extends DirtyScene {
                         this.initUserPermissionsOnEntity();
                         this.hide(false);
                         gameSceneIsLoadedStore.set(true);
+                        import("../../Stores/LoaderStore").then(({ loaderVisibleStore }) => {
+                            loaderVisibleStore.set(false);
+                        });
                         this.sceneReadyToStartDeferred.resolve();
                         this.initializeAreaManager();
                     })
