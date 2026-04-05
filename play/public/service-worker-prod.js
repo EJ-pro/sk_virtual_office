@@ -22,7 +22,11 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('fetch', function(event) {
-    // Basic pass-through to ensure requests aren't blocked, with a fallback to the original caching logic if needed
+    // CRITICAL FIX: Skip service worker for POST requests and login API to avoid hangs
+    if (event.request.method === 'POST' || event.request.url.includes('anonymLogin') || event.request.url.includes('/api/')) {
+        return; // Let the browser handle it directly
+    }
+
     event.respondWith(
         fetch(event.request)
             .then(function(response) {
@@ -30,9 +34,6 @@ self.addEventListener('fetch', function(event) {
                 if(!response || response.status !== 200 || response.type !== 'basic') {
                     return response;
                 }
-
-                // If you want to enable caching later, you can do it here. 
-                // For now, we just return the network response to fix the hang.
                 return response;
             })
             .catch(function() {

@@ -22,6 +22,11 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('fetch', (event) => {
+    // CRITICAL FIX: Skip service worker for POST requests and login API to avoid hangs
+    if (event.request.method === 'POST' || event.request.url.includes('anonymLogin') || event.request.url.includes('/api/')) {
+        return; // Let the browser handle it directly
+    }
+
     // Basic pass-through for development to ensure requests aren't blocked
     event.respondWith(fetch(event.request));
 });
