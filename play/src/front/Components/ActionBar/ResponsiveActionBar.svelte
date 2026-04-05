@@ -83,14 +83,15 @@
         RESPONSIVE_BAR: mode={mode} | width={actionBarWidth} | fullVisible={fullMenuVisible}
     </div>
     <div class="gap-1 @md/actions:gap-2 @xl/actions:gap-4 p-1 @md/actions:p-2 @xl/actions:p-4 screen-blocker">
-        <div class="w-full flex justify-between items-center" bind:offsetWidth={actionBarWidth}>
+        <div class="w-full flex justify-between items-center">
             <!-- Left bar -->
-            <div class="flex-1 flex">
-                <div class="flex-none" bind:offsetWidth={leftDivWidth}>
+            <div class="flex-1 flex" style="background: rgba(255,0,0,0.3); min-height: 20px;">
+                <div class="flex-none">
+                    <span style="color: yellow; font-size: 10px;">INTERNAL_LEFT</span>
                     <slot name="left" />
                 </div>
                 {#if mode === "wide"}
-                    <div class="w-0 flex-1 min-w-0 flex justify-end" bind:offsetWidth={leftToCenterWidth} />
+                    <div class="w-0 flex-1 min-w-0 flex justify-end" />
                 {/if}
             </div>
             <!-- Center + right bar -->
@@ -99,9 +100,11 @@
                 class:flex-none={mode === "wide"}
                 class:flex-1={mode === "shrunk"}
                 bind:this={centerPlusRightDiv}
+                style="background: rgba(0,255,0,0.3); min-height: 20px;"
             >
                 <!-- Center bar -->
-                <div class="flex justify-end" bind:offsetWidth={centerDivWidth}>
+                <div class="flex justify-end">
+                    <span style="color: yellow; font-size: 10px;">INTERNAL_CENTER</span>
                     <slot name="center" />
                 </div>
                 <!-- Right bar -->
@@ -110,8 +113,10 @@
                     class:flex-none={mode === "wide"}
                     class:flex-1={mode === "shrunk"}
                     bind:this={rightDiv}
+                    style="background: rgba(0,0,255,0.3); min-height: 20px;"
                 >
                     <div class="flex flew-row flex-none h-full" bind:this={rightDivContent}>
+                        <span style="color: yellow; font-size: 10px;">INTERNAL_RIGHT</span>
                         <slot name="right" />
                     </div>
                 </div>
