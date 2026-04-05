@@ -124,6 +124,9 @@
         : ''}"
     style="padding-inline-start : {marginLeft}px; padding-inline-end: {marginRight}px "
 >
+    <div style="background: green; color: white; padding: 5px; font-size: 10px; position: fixed; top: 0; left: 0; z-index: 9999;">
+        MAIN LAYOUT INTERNAL MOUNTED
+    </div>
     {#if $modalVisibilityStore}
         <div class="bg-black/60 w-full h-full fixed start-0 end-0" />
     {/if}
@@ -134,7 +137,7 @@
         </div>
     {/if}
 
-    <AudioPlayer />
+    <!-- <AudioPlayer /> -->
 
     <div class="flex min-h-full flex-col-reverse mobile:flex-col">
         <section id="main-layout-main" class="pb-0 flex-1 pointer-events-none h-full w-full relative">
