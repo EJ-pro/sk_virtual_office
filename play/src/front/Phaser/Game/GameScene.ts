@@ -979,26 +979,32 @@ export class GameScene extends DirtyScene {
         }, 10000);
 
         Promise.all([
-            this.connectionAnswerPromiseDeferred.promise.then(() =>
-                console.info("Loading process: Websocket connection ready")
-            ),
+            this.connectionAnswerPromiseDeferred.promise.then(() => {
+                console.info("UI_DEBUG: 1/5 Websocket connection ready");
+            }),
             Promise.allSettled(scriptPromises).then((results) => {
-                console.info("Loading process: Scripts loaded");
+                console.info("UI_DEBUG: 2/5 Scripts loaded");
                 return results;
             }),
-            this.CurrentPlayer.getTextureLoadedPromise().then(() =>
-                console.info("Loading process: Current player texture ready")
-            ) as Promise<unknown>,
-            mapInitializedWithTimeout,
+            this.CurrentPlayer.getTextureLoadedPromise().then(() => {
+                console.info("UI_DEBUG: 3/5 Current player texture ready");
+            }) as Promise<unknown>,
+            mapInitializedWithTimeout.then((res) => {
+                console.info(`UI_DEBUG: 4/5 Map initialization finished: ${res}`);
+                return res;
+            }),
             // Wait at most 5 seconds for the chat connection to be established
             // If not, we can still proceed starting the scene without chat fully loaded
             raceTimeout(gameManager.getChatConnection(), 5_000)
-                .then(() => console.info("Loading process: Chat connection ready"))
+                .then(() => {
+                    console.info("UI_DEBUG: 5/5 Chat connection ready");
+                })
                 .catch((e) => {
                     if (e instanceof TimeoutError) {
-                        console.warn("Loading process: Chat connection timeout. Continuing loading while chat loads.");
+                        console.warn("UI_DEBUG: Chat connection timeout. Continuing loading.");
                         return;
                     } else {
+                        console.error("UI_DEBUG: Chat connection error", e);
                         throw e;
                     }
                 }),
