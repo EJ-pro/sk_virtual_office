@@ -132,9 +132,14 @@ import type { AddPlayerEvent } from "../../Api/Events/AddPlayerEvent";
 import { chatVisibilityStore, forceRefreshChatStore } from "../../Stores/ChatStore";
 import type { HasPlayerMovedInterface } from "../../Api/Events/HasPlayerMovedInterface";
 import { extensionModuleStore, gameSceneIsLoadedStore, gameSceneStore } from "../../Stores/GameSceneStore";
+import { loaderVisibleStore } from "../../Stores/LoaderStore";
 import { myCameraBlockedStore, myMicrophoneBlockedStore } from "../../Stores/MyMediaStore";
 import type { GameStateEvent } from "../../Api/Events/GameStateEvent";
 import { currentPlayerWokaStore } from "../../Stores/CurrentPlayerWokaStore";
+import { loginSceneVisibleStore } from "../../Stores/LoginSceneStore";
+import { selectCharacterSceneVisibleStore } from "../../Stores/SelectCharacterStore";
+import { selectCompanionSceneVisibleStore } from "../../Stores/SelectCompanionStore";
+import { enableCameraSceneVisibilityStore } from "../../Stores/MediaStore";
 import {
     mapEditorModeStore,
     mapEditorRestrictedPropertiesStore,
@@ -1017,10 +1022,15 @@ export class GameScene extends DirtyScene {
 
                         this.initUserPermissionsOnEntity();
                         this.hide(false);
+                        
+                        // Force reset all UI stores to ensure top UI is visible
+                        loaderVisibleStore.set(false);
+                        loginSceneVisibleStore.set(false);
+                        selectCharacterSceneVisibleStore.set(false);
+                        selectCompanionSceneVisibleStore.set(false);
+                        enableCameraSceneVisibilityStore.set(false);
+                        
                         gameSceneIsLoadedStore.set(true);
-                        import("../../Stores/LoaderStore").then(({ loaderVisibleStore }) => {
-                            loaderVisibleStore.set(false);
-                        });
                         this.sceneReadyToStartDeferred.resolve();
                         this.initializeAreaManager();
                     })
