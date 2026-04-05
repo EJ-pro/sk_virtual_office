@@ -77,11 +77,11 @@
 </script>
 
 <div
-    class="@container/actions w-full z-[301] transition-all pointer-events-none bp-menu {$videoStreamElementsStore.length >
-        0 && $highlightFullScreen
-        ? 'hidden'
-        : ''}"
+    class="@container/actions w-full z-[301] transition-all pointer-events-none bp-menu"
 >
+    <div style="background: purple; color: white; font-size: 8px; position: absolute; top: -10px; left: 0;">
+        RESPONSIVE_BAR: mode={mode} | width={actionBarWidth} | fullVisible={fullMenuVisible}
+    </div>
     <div class="gap-1 @md/actions:gap-2 @xl/actions:gap-4 p-1 @md/actions:p-2 @xl/actions:p-4 screen-blocker">
         <div class="w-full flex justify-between items-center" bind:offsetWidth={actionBarWidth}>
             <!-- Left bar -->
