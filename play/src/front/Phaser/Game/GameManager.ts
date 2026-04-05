@@ -1,6 +1,7 @@
 import type { Unsubscriber } from "svelte/store";
 import { get } from "svelte/store";
 import * as Sentry from "@sentry/svelte";
+import { loaderVisibleStore } from "../../Stores/LoaderStore";
 import { TimeoutError } from "@workadventure/shared-utils/src/Abort/TimeoutError";
 import { connectionManager } from "../../Connection/ConnectionManager";
 import { localUserStore } from "../../Connection/LocalUserStore";
@@ -64,8 +65,11 @@ export class GameManager {
     }
 
     public async init(scenePlugin: Phaser.Scenes.ScenePlugin): Promise<string> {
+        console.info("GameManager.init started");
+        loaderVisibleStore.set(true);
         this.scenePlugin = scenePlugin;
         const result = await connectionManager.initGameConnexion();
+        console.info("connectionManager.initGameConnexion finished", result);
         if (result instanceof URL) {
             window.location.assign(result.toString());
             // window.location.assign is not immediate and Javascript keeps running after.
