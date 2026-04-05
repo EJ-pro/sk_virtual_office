@@ -1,6 +1,6 @@
 import { basename } from "path";
 import fs from "fs";
-import { defineConfig, loadEnv } from "vite";
+import { defineConfig, loadEnv, type UserConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
 import { sveltePreprocess } from "svelte-preprocess";
 import { sentryVitePlugin } from "@sentry/vite-plugin";
@@ -19,9 +19,13 @@ export default defineConfig(({ mode }) => {
             port: 8080,
             cors: true,
             hmr: {
-                // workaround for development in docker
-                clientPort: 80,
+                // workaround for development in docker behind HTTPS reverse proxy
+                clientPort: 443,
+                protocol: "wss",
+                host: "front.sk-camp.cloud",
             },
+            // Allow all hosts (needed when accessed via custom domain through Traefik)
+            allowedHosts: true as true,
             watch: {
                 ignored: ["./src/pusher"],
             },
