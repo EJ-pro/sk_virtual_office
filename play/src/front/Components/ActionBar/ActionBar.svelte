@@ -35,8 +35,12 @@
     let actionBarWidth: number;
 
     const gameScene = gameManager.getCurrentGameScene();
-    const showChatButton = gameScene.room.isChatEnabled;
-    const showUserListButton = gameScene.room.isChatOnlineListEnabled;
+    const showChatButton = gameScene?.room?.isChatEnabled ?? false;
+    const showUserListButton = gameScene?.room?.isChatOnlineListEnabled ?? false;
+
+    if (!gameScene) {
+        console.warn("UI_DEBUG: ActionBar mounted but gameScene is null!");
+    }
 
     $: isSmallScreen = actionBarWidth < 640;
 
@@ -45,6 +49,9 @@
     }
 </script>
 
+<div style="background: orange; color: black; padding: 2px; font-size: 10px; position: fixed; top: 20px; left: 0; z-index: 9998;">
+    ACTION BAR MOUNTED (Scene: {!!gameManager.getCurrentGameScene()})
+</div>
 {#if !$hideActionBarStoreBecauseOfChatBar}
     <ResponsiveActionBar bind:rightDiv bind:actionBarWidth>
         <div slot="left" class="justify-start flex-none">
