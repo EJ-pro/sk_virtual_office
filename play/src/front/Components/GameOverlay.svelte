@@ -106,7 +106,8 @@
         <RefreshPrompt />
     {/if}
     {#key $forceRefreshChatStore}
-        <ChatSidebar />
+        <!-- Temporarily disabled ChatSidebar for debugging -->
+        <!-- <ChatSidebar /> -->
         {#if $mapEditorModeStore}
             <MapEditor />
         {/if}
@@ -116,7 +117,9 @@
 
         <Onboarding />
 
-        <MainLayout />
+        <div style="z-index: 1000; position: relative;">
+            <MainLayout />
+        </div>
     {/key}
     <MainModal />
 
