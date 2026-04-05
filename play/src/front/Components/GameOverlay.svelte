@@ -99,15 +99,11 @@
 {:else if $mapDeletedPromptStore}
     <MapDeletedPrompt />
 {:else if $gameSceneIsLoadedStore && !$loaderVisibleStore}
-    <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: red; color: white; padding: 20px; z-index: 9999; pointer-events: none; opacity: 0.8;">
-        UI BLOCK ACTIVE - MAIN LAYOUT SHOULD BE HERE
-    </div>
     {#if $refreshPromptStore}
         <RefreshPrompt />
     {/if}
     {#key $forceRefreshChatStore}
-        <!-- Temporarily disabled ChatSidebar for debugging -->
-        <!-- <ChatSidebar /> -->
+        <ChatSidebar />
         {#if $mapEditorModeStore}
             <MapEditor />
         {/if}
@@ -132,22 +128,4 @@
 {/if}
 
 <FloatingUiPopupList />
-<!-- DEBUG OVERLAY -->
-<div style="position: fixed; bottom: 10px; left: 10px; background: rgba(0,0,0,0.8); color: white; padding: 10px; font-size: 11px; z-index: 9999; border: 1px solid red; pointer-events: auto;">
-    <b>DEBUG:</b> 
-    L:{$loaderVisibleStore} | 
-    G:{$gameSceneIsLoadedStore} | 
-    ErrS:{$errorScreenStore !== undefined} | 
-    Err:{$errorStore.length} | 
-    Login:{$loginSceneVisibleStore} | 
-    Woka:{$selectCharacterSceneVisibleStore} | 
-    Cam:{$enableCameraSceneVisibilityStore} |
-    DOM_UI:{typeof document !== 'undefined' ? !!document.getElementById('main-layout') : 'N/A'}
-    <button style="background: red; color: white; margin-left: 10px; cursor: pointer;" on:click={() => {
-        gameSceneIsLoadedStore.set(true);
-        loaderVisibleStore.set(false);
-        loginSceneVisibleStore.set(false);
-        selectCharacterSceneVisibleStore.set(false);
-    }}>FORCE UI</button>
-</div>
 <!-- </div> -->

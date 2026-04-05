@@ -49,13 +49,9 @@
     }
 </script>
 
-<div style="background: orange; color: black; padding: 2px; font-size: 10px; position: fixed; top: 20px; left: 0; z-index: 9998;">
-    ACTION BAR MOUNTED (Scene: {!!gameManager.getCurrentGameScene()}) | Hide:{$hideActionBarStoreBecauseOfChatBar}
-</div>
 {#if true || !$hideActionBarStoreBecauseOfChatBar}
     <ResponsiveActionBar bind:rightDiv bind:actionBarWidth>
         <div slot="left" class="justify-start flex-none">
-            <div style="background: white; border: 2px solid red; color: red; padding: 2px; font-size: 10px;">SLOT_LEFT</div>
             <div class="flex relative transition-all duration-150 z-[2]" data-testid="chat-action">
                 {#if !$chatVisibilityStore}
                     <ChatMenuItem chatEnabledInAdmin={showChatButton} last={isSmallScreen ? true : undefined} />
