@@ -969,6 +969,15 @@ export class GameScene extends DirtyScene {
             }),
         ]);
 
+        // Safety timeout to force UI visibility if initialization hangs
+        const safetyTimeout = setTimeout(() => {
+            if (!get(gameSceneIsLoadedStore)) {
+                console.warn("UI_DEBUG: Safety timeout triggered! Forcing UI visibility.");
+                loaderVisibleStore.set(false);
+                gameSceneIsLoadedStore.set(true);
+            }
+        }, 10000);
+
         Promise.all([
             this.connectionAnswerPromiseDeferred.promise.then(() =>
                 console.info("Loading process: Websocket connection ready")
@@ -995,6 +1004,7 @@ export class GameScene extends DirtyScene {
                 }),
         ])
             .then((results) => {
+                clearTimeout(safetyTimeout);
                 const settledScriptLoadedResult = results[1];
                 // Script loading might have failed, in particular if the network connection was lost.
                 // In this case, the websocket connection will keep retrying, while the script will not retry.
