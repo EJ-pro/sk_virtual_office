@@ -35,7 +35,9 @@
     let activeCowebsite = $coWebsites[0];
     let gameContainer: HTMLDivElement;
     let canvas: HTMLCanvasElement;
-    let handleCanvasClick: () => void;
+    const handleCanvasClick = () => {
+        canvas?.focus();
+    };
     let isGameStarted = false;
     let browserNotSupported = false;
     let currentRoute = window.location.hash;

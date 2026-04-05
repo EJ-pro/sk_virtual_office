@@ -139,14 +139,6 @@ const chat: DeepPartial<Translation["chat"]> = {
             },
             googleDocs: {
                 title: "Google 문서",
-                description: "협업 문서 공유",
-            },
-            googleSlides: {
-                title: "Google 슬라이드",
-                description: "발표 자료 공유",
-            },
-            googleDocs: {
-                title: "Google 문서",
                 description: "채팅에 Google 문서를 삽입해 보내기",
             },
             googleSlides: {
