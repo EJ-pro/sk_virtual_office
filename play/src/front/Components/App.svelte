@@ -1,6 +1,6 @@
 <script lang="ts">
     /* eslint no-undef: 0 */
-    import { onDestroy, onMount } from "svelte";
+    import { onDestroy, onMount, tick } from "svelte";
     import * as Sentry from "@sentry/svelte";
     import WebFontLoaderPlugin from "phaser3-rex-plugins/plugins/webfontloader-plugin.js";
     import AwaitLoaderPlugin from "phaser3-rex-plugins/plugins/awaitloader-plugin.js";
@@ -203,6 +203,8 @@
         };
 
         game = new Game(config);
+        isGameStarted = true;
+        await tick(); // Force Svelte to re-render with the new game object
 
         waScaleManager.setGame(game);
 
@@ -220,7 +222,6 @@
         //updateScreenSize();
         iframeListener.init();
         desktopApi.init();
-        isGameStarted = true;
     });
 
     $: if ($coWebsites.length > 0) {
@@ -267,7 +268,7 @@
         bind:this={gameContainer}
     >
         <div id="game" class="relative {$fullScreenCowebsite ? 'hidden' : ''}" bind:this={gameDiv}>
-            {#if game}
+            {#if isGameStarted && game}
                 <GameOverlay {game} />
             {/if}
         </div>
