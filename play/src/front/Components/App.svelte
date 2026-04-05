@@ -45,7 +45,7 @@
         currentRoute = window.location.hash;
     };
 
-    onMount(() => {
+    onMount(async () => {
         window.addEventListener("hashchange", handleHashChange);
         // Check browser compatibility before initializing the app
         if (!isStructuredCloneSupported()) {
