@@ -1028,7 +1028,7 @@ export class GameScene extends DirtyScene {
                         loginSceneVisibleStore.set(false);
                         selectCharacterSceneVisibleStore.set(false);
                         selectCompanionSceneVisibleStore.set(false);
-                        enableCameraSceneVisibilityStore.set(false);
+                        enableCameraSceneVisibilityStore.hideEnableCameraScene();
                         
                         gameSceneIsLoadedStore.set(true);
                         this.sceneReadyToStartDeferred.resolve();
