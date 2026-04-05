@@ -21,9 +21,10 @@ self.addEventListener('install', function(event) {
     );
 });
 
+/*
 self.addEventListener('fetch', function(event) {
     //TODO mamnage fetch data and cache management
-    /*event.respondWith(
+    event.respondWith(
         caches.match(event.request)
             .then(function(response) {
                 // Cache hit - return response
@@ -53,9 +54,11 @@ self.addEventListener('fetch', function(event) {
                     }
                 );
             })
-    );*/
+    );
 });
+*/
 
+/*
 self.addEventListener('wait', function(event) {
     //TODO wait
 });
@@ -67,3 +70,4 @@ self.addEventListener('update', function(event) {
 self.addEventListener('beforeinstallprompt', (e) => {
     //TODO change prompt
 });
+*/

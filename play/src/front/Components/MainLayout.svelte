@@ -137,7 +137,7 @@
         </div>
     {/if}
 
-    <!-- <AudioPlayer /> -->
+    <AudioPlayer />
 
     <div style="position: fixed; top: 0; left: 0; width: 100%; z-index: 500; pointer-events: none;">
         <ActionBar />
@@ -145,7 +145,6 @@
 
     <div class="flex min-h-full flex-col">
         <section id="main-layout-main" class="pb-0 flex-1 pointer-events-none h-full w-full relative">
-            <!-- ... existing section content ... -->
             <div class="fixed z-[1000] bottom-0 start-0 right-0 m-auto w-max mobile:w-[98vw] md:max-w-[80%]">
                 <div class="popups flex items-end relative w-full justify-center mobile:mb-24 mb-4 h-[calc(100%-96px)]">
                     {#each $popupStore.slice().reverse() as popup, index (popup.uuid)}
@@ -208,6 +207,19 @@
 
             {#if $soundPlayingStore}
                 <AudioPlaying url={$soundPlayingStore} />
+            {/if}
+
+            {#if $showLimitRoomModalStore}
+                <LimitRoomModal />
+            {/if}
+
+            {#if $toastStore.size > 0}
+                <div class="absolute top-0 right-2 z-[999] flex flex-col gap-2 items-end">
+                    {#each [...$toastStore.entries()] as toastEntry (toastEntry[0])}
+                        {@const toast = toastEntry[1]}
+                        <svelte:component this={toast.component} {...toast.props} />
+                    {/each}
+                </div>
             {/if}
 
             {#if $showRecordingList}

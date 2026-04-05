@@ -21,6 +21,7 @@ self.addEventListener('install', function(event) {
     );
 });
 
+/*
 self.addEventListener('fetch', () => {
     //never cache data will be stored in dev mode
 });
@@ -36,4 +37,5 @@ self.addEventListener('update', function(event) {
 self.addEventListener('beforeinstallprompt', (e) => {
     //TODO change prompt
 });
+*/
 
