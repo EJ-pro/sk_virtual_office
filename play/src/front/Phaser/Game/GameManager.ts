@@ -65,11 +65,9 @@ export class GameManager {
     }
 
     public async init(scenePlugin: Phaser.Scenes.ScenePlugin): Promise<string> {
-        console.info("GameManager.init started");
         loaderVisibleStore.set(true);
         this.scenePlugin = scenePlugin;
         const result = await connectionManager.initGameConnexion();
-        console.info("connectionManager.initGameConnexion finished", result);
         if (result instanceof URL) {
             window.location.assign(result.toString());
             // window.location.assign is not immediate and Javascript keeps running after.
