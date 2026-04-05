@@ -126,4 +126,14 @@
 {/if}
 
 <FloatingUiPopupList />
+<!-- DEBUG OVERLAY -->
+<div style="position: fixed; bottom: 10px; left: 10px; background: rgba(0,0,0,0.7); color: white; padding: 5px; font-size: 10px; z-index: 9999; pointer-events: none;">
+    L:{$loaderVisibleStore} | 
+    G:{$gameSceneIsLoadedStore} | 
+    ErrS:{$errorScreenStore !== undefined} | 
+    Err:{$errorStore.length} | 
+    Login:{$loginSceneVisibleStore} | 
+    Woka:{$selectCharacterSceneVisibleStore} | 
+    Cam:{$enableCameraSceneVisibilityStore}
+</div>
 <!-- </div> -->

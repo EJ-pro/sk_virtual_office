@@ -1001,6 +1001,7 @@ export class GameScene extends DirtyScene {
                 // Therefore, just after the websocket connection is established (so at a time we know the scripts
                 // can be retried), we retry loading the failed scripts.
 
+                console.log("UI_DEBUG: Waiting for allSettled scriptReload");
                 Promise.allSettled(
                     settledScriptLoadedResult.map((result: PromiseSettledResult<void>) => {
                         if (result.status === "rejected") {
@@ -1014,29 +1015,40 @@ export class GameScene extends DirtyScene {
                     })
                 )
                     .then((scriptReload) => {
+                        console.log("UI_DEBUG: allSettled finished, starting final setup");
                         for (const r of scriptReload) {
                             if (r.status === "rejected") {
                                 console.error("Error while reloading script after connection established", r.reason);
                             }
                         }
 
-                        this.initUserPermissionsOnEntity();
-                        this.hide(false);
+                        try {
+                            this.initUserPermissionsOnEntity();
+                            this.hide(false);
+                            
+                            console.log("UI_DEBUG: Starting UI store reset chain (Atomic)");
+                            
+                            setTimeout(() => {
+                                // Force reset all UI stores to ensure top UI is visible
+                                loaderVisibleStore.set(false);
+                                loginSceneVisibleStore.set(false);
+                                selectCharacterSceneVisibleStore.set(false);
+                                selectCompanionSceneVisibleStore.set(false);
+                                enableCameraSceneVisibilityStore.hideEnableCameraScene();
+                                
+                                console.log("UI_DEBUG: Setting gameSceneIsLoadedStore to true");
+                                gameSceneIsLoadedStore.set(true);
+                            }, 50);
+                        } catch (e) {
+                            console.error("UI_DEBUG_ERROR: Error during final setup", e);
+                        }
                         
-                        // Force reset all UI stores to ensure top UI is visible
-                        loaderVisibleStore.set(false);
-                        loginSceneVisibleStore.set(false);
-                        selectCharacterSceneVisibleStore.set(false);
-                        selectCompanionSceneVisibleStore.set(false);
-                        enableCameraSceneVisibilityStore.hideEnableCameraScene();
-                        
-                        gameSceneIsLoadedStore.set(true);
                         this.sceneReadyToStartDeferred.resolve();
                         this.initializeAreaManager();
                     })
-                    .catch((e) => {
-                        console.error("Promise.allSettled should never error", e);
-                        Sentry.captureException(e);
+                    .catch((err) => {
+                        console.error("UI_DEBUG_ERROR: Promise chain failed", err);
+                        Sentry.captureException(err);
                     });
             })
             .catch((e: unknown) => {
