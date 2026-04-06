@@ -11,7 +11,7 @@
 
 {#if duel.status === "DUELING" || duel.status === "FINISHED"}
     <div
-        class="fixed top-20 left-1/2 -translate-x-1/2 z-[1000] min-w-[300px]"
+        class="fixed top-20 left-1/2 -translate-x-1/2 z-[1000] min-w-[300px] pointer-events-auto"
         transition:fade
     >
         <div class="bg-black/60 backdrop-blur-md rounded-full border-2 border-primary/50 p-2 px-6 flex items-center justify-between shadow-2xl relative overflow-hidden group">

@@ -406,17 +406,15 @@ export class RemotePlayer extends Character implements ActivatableInterface {
         });
         // Add action for 1:1 Duel
         actions.push({
-            actionName: "1:1 대결 신청",
+            actionName: "⚔️ 1:1 대결 신청",
             protected: false,
-            priority: 4,
-            style: "bg-white/10 hover:bg-white/30",
-
+            priority: 100,
+            style: "bg-red-600 hover:bg-red-700 text-white font-bold",
             callback: () => {
                 this.scene.connection?.emitEmoteEvent(`duel_request:${this.userUuid}`);
                 duelStore.requestDuel(this.userId, this.playerName);
             },
-
-            actionIcon: IconUserPlus, // Using UserPlus for now
+            actionIcon: chat,
         });
 
         return actions;
@@ -427,6 +425,7 @@ export class RemotePlayer extends Character implements ActivatableInterface {
         this.on(Phaser.Input.Events.POINTER_DOWN, (event: Phaser.Input.Pointer) => {
             if (event.downElement.nodeName === "CANVAS" && event.leftButtonDown()) {
                 this.emit(RemotePlayerEvent.Clicked);
+                this.activate();
             }
         });
     }

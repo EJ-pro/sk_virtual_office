@@ -276,16 +276,21 @@
                     {#if $meetingInvitationRequestStore}
                         <MeetingInvitationPopup />
                     {/if}
+                </div>
+            {/if}
+
             <ExternalComponents zone="centeredPopup" />
 
             <ExplorerMenu />
         </section>
+
         {#if $duelStore.status === "RECEIVED_REQUEST"}
             <DuelRequestPopup />
         {/if}
         <DuelHUD />
     </div>
 </div>
+
 
 
 <style lang="scss">
