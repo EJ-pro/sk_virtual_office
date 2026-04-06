@@ -46,6 +46,7 @@ export class EntryScene extends Scene {
                                 // Let's rescale before starting the game
                                 // We can do it at this stage.
                                 waScaleManager.applyNewSize();
+                                console.info("EntryScene: Starting next scene: " + nextSceneName);
                                 this.scene.start(nextSceneName);
                             })
                             .catch((e) => {
@@ -75,13 +76,21 @@ export class EntryScene extends Scene {
      * This function wait for the plugin to be loaded before starting to load resources.
      */
     private async waitPluginLoad(): Promise<void> {
+        let retries = 0;
+        const maxRetries = 50; // 5 seconds maximum
         return new Promise((resolve) => {
             const check = () => {
                 //eslint-disable-next-line @typescript-eslint/no-explicit-any
-                if ((this.load as any).rexAwait) {
+                if ((this.load as any).rexAwait || retries >= maxRetries) {
+                    if (retries >= maxRetries) {
+                        console.warn("rexAwait plugin failed to load after 5 seconds. Proceeding anyway, but some features may fail.");
+                    }
                     resolve();
                 } else {
-                    console.info("Waiting for rex plugins to be loaded...");
+                    retries++;
+                    if (retries % 10 === 0) {
+                        console.info("Waiting for rex plugins to be loaded...");
+                    }
                     setTimeout(check, 100);
                 }
             };
