@@ -365,7 +365,9 @@ export class ProximityChatRoom implements ChatRoom {
         return Promise.resolve();
     }
     setTimelineAsRead(): void {
-        console.info("setTimelineAsRead => Method not implemented yet!");
+        this.hasUnreadMessages.set(false);
+        this.unreadMessagesCount.set(0);
+        this.unreadNotificationCount.set(0);
     }
 
     loadMorePreviousMessages(): Promise<void> {

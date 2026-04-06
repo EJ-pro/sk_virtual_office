@@ -8,6 +8,7 @@
     import WokaFromUserId from "../Woka/WokaFromUserId.svelte";
     import { analyticsClient } from "../../Administration/AnalyticsClient";
     import LL from "../../../i18n/i18n-svelte";
+    import logowapixtel from "../images/logo-WA-pixel.png";
     import { gameManager } from "../../Phaser/Game/GameManager";
     import { getColorHexOfStatus, getStatusLabel } from "../../Utils/AvailabilityStatus";
     import type { WokaMenuAction, WokaMenuData } from "../../Stores/WokaMenuStore";
@@ -92,7 +93,7 @@
                             >
                                 <WokaFromUserId
                                     userId={wokaMenuData.userId}
-                                    placeholderSrc="/assets/placeholder-woka.png"
+                                    placeholderSrc={logowapixtel}
                                     customWidth="4rem"
                                 />
                             </div>

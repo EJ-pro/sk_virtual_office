@@ -116,7 +116,9 @@ class AudioContextManager {
                 // Remove the toast
                 toastStore.removeToast(AUDIO_CONTEXT_TOAST_UUID);
             }
-            context.close().catch(console.error);
+            if (context.state !== "closed") {
+                context.close().catch(console.error);
+            }
         };
         const isNotSuspended = context.state !== "suspended";
         isNotSuspendedAudioContextStore.set(isNotSuspended);
