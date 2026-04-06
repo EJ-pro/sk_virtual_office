@@ -1,7 +1,9 @@
 <script lang="ts">
     import { createEventDispatcher, onMount } from "svelte";
+    import AdminMailbox from "./AdminMailbox.svelte";
     const dispatch = createEventDispatcher();
 
+    let activeTab: "students" | "mailbox" = "students";
     let users: Record<string, string> = {};
     let newId = "";
     let newPw = "1234";
@@ -82,7 +84,7 @@
 
 <div class="p-8 max-w-6xl mx-auto min-h-screen bg-[#0f172a] text-white">
     <!-- Header -->
-    <header class="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6">
+    <header class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-6">
         <div>
             <h1 class="text-4xl font-black tracking-tight mb-2">CAMP MANAGER</h1>
             <p class="text-white/40 font-medium">SK Networks Family AI Camp 27th</p>
@@ -103,116 +105,142 @@
         </div>
     </header>
 
-    <div class="grid lg:grid-cols-3 gap-10">
-        <!-- Add Section -->
-        <aside class="space-y-6">
-            <div class="glass-card p-8 rounded-3xl border border-white/10 shadow-xl relative overflow-hidden">
-                <div class="absolute top-0 right-0 p-6 opacity-10 pointer-events-none">
-                    <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-                </div>
-                <h2 class="text-xl font-bold mb-6">Create Student</h2>
-                <form on:submit|preventDefault={addUser} class="space-y-4">
-                    <div>
-                        <label class="block text-[10px] uppercase font-bold text-white/30 mb-2 tracking-widest">Student ID</label>
-                        <input
-                            type="text"
-                            bind:value={newId}
-                            placeholder="e.g. 27기_홍길동"
-                            class="dashboard-input w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white outline-none focus:border-indigo-500/50 transition-all text-sm"
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label class="block text-[10px] uppercase font-bold text-white/30 mb-2 tracking-widest">Access Password</label>
-                        <input
-                            type="text"
-                            bind:value={newPw}
-                            placeholder="Default: 1234"
-                            class="dashboard-input w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white outline-none focus:border-indigo-500/50 transition-all text-sm"
-                            required
-                        />
-                    </div>
-                    <button
-                        type="submit"
-                        disabled={isSaving}
-                        class="add-btn w-full py-4 rounded-xl text-white font-bold text-xs uppercase tracking-widest transition-all"
-                    >
-                        {isSaving ? "Registering..." : "Add to Roster"}
-                    </button>
-                </form>
-            </div>
+    <!-- Navigation Tabs -->
+    <nav class="flex gap-2 mb-10 p-1.5 bg-white/5 rounded-2xl w-fit border border-white/5">
+        <button 
+            class="tab-btn" 
+            class:active={activeTab === 'students'} 
+            on:click={() => activeTab = 'students'}
+        >
+            <span class="icon">👥</span>
+            학생 관리
+        </button>
+        <button 
+            class="tab-btn" 
+            class:active={activeTab === 'mailbox'} 
+            on:click={() => activeTab = 'mailbox'}
+        >
+            <span class="icon">📮</span>
+            우체통 관리
+        </button>
+    </nav>
 
-            {#if message}
-                <div role="alert" class="p-4 rounded-2xl border {message.includes('✅') ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' : 'bg-red-500/10 border-red-500/20 text-red-400'} text-center text-sm font-bold animate-fade-in">
-                    {message}
-                </div>
-            {/if}
-        </aside>
-
-        <!-- List Section -->
-        <main class="lg:col-span-2 space-y-6">
-            <div class="glass-card rounded-3xl border border-white/10 overflow-hidden shadow-2xl">
-                <div class="p-6 bg-white/[0.02] border-b border-white/5 flex items-center justify-between">
-                    <h2 class="text-xl font-bold flex items-center gap-3">
-                        Student Roaster
-                        <span class="px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-400 text-[10px] font-black uppercase">
-                            {Object.keys(users).length} total
-                        </span>
-                    </h2>
-                    <div class="relative max-w-[200px] w-full">
-                        <input
-                            type="text"
-                            bind:value={searchTerm}
-                            placeholder="Search name..."
-                            class="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-xs outline-none focus:border-indigo-500/30 transition-all"
-                        />
+    {#if activeTab === 'students'}
+        <div class="grid lg:grid-cols-3 gap-10 animate-fade-in">
+            <!-- Add Section -->
+            <aside class="space-y-6">
+                <div class="glass-card p-8 rounded-3xl border border-white/10 shadow-xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-6 opacity-10 pointer-events-none">
+                        <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
                     </div>
+                    <h2 class="text-xl font-bold mb-6">Create Student</h2>
+                    <form on:submit|preventDefault={addUser} class="space-y-4">
+                        <div>
+                            <label class="block text-[10px] uppercase font-bold text-white/30 mb-2 tracking-widest">Student ID</label>
+                            <input
+                                type="text"
+                                bind:value={newId}
+                                placeholder="e.g. 27기_홍길동"
+                                class="dashboard-input w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white outline-none focus:border-indigo-500/50 transition-all text-sm"
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase font-bold text-white/30 mb-2 tracking-widest">Access Password</label>
+                            <input
+                                type="text"
+                                bind:value={newPw}
+                                placeholder="Default: 1234"
+                                class="dashboard-input w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white outline-none focus:border-indigo-500/50 transition-all text-sm"
+                                required
+                            />
+                        </div>
+                        <button
+                            type="submit"
+                            disabled={isSaving}
+                            class="add-btn w-full py-4 rounded-xl text-white font-bold text-xs uppercase tracking-widest transition-all"
+                        >
+                            {isSaving ? "Registering..." : "Add to Roster"}
+                        </button>
+                    </form>
                 </div>
 
-                <div class="overflow-x-auto max-h-[600px] overflow-y-auto custom-scrollbar">
-                    <table class="w-full text-left border-collapse">
-                        <thead class="sticky top-0 bg-[#161f35] z-10">
-                            <tr>
-                                <th class="px-8 py-5 text-[10px] uppercase font-bold text-white/30 tracking-widest">Student ID</th>
-                                <th class="px-8 py-5 text-[10px] uppercase font-bold text-white/30 tracking-widest">Password</th>
-                                <th class="px-8 py-5 text-[10px] uppercase font-bold text-white/30 tracking-widest text-right">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-white/5">
-                            {#if isLoading}
+                {#if message}
+                    <div role="alert" class="p-4 rounded-2xl border {message.includes('✅') ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' : 'bg-red-500/10 border-red-500/20 text-red-400'} text-center text-sm font-bold animate-fade-in">
+                        {message}
+                    </div>
+                {/if}
+            </aside>
+
+            <!-- List Section -->
+            <main class="lg:col-span-2 space-y-6">
+                <div class="glass-card rounded-3xl border border-white/10 overflow-hidden shadow-2xl">
+                    <div class="p-6 bg-white/[0.02] border-b border-white/5 flex items-center justify-between">
+                        <h2 class="text-xl font-bold flex items-center gap-3">
+                            Student Roaster
+                            <span class="px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-400 text-[10px] font-black uppercase">
+                                {Object.keys(users).length} total
+                            </span>
+                        </h2>
+                        <div class="relative max-w-[200px] w-full">
+                            <input
+                                type="text"
+                                bind:value={searchTerm}
+                                placeholder="Search name..."
+                                class="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-xs outline-none focus:border-indigo-500/30 transition-all"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto max-h-[600px] overflow-y-auto custom-scrollbar">
+                        <table class="w-full text-left border-collapse">
+                            <thead class="sticky top-0 bg-[#161f35] z-10">
                                 <tr>
-                                    <td colspan="3" class="px-8 py-20 text-center text-white/20 font-medium animate-pulse">
-                                        Downloading roster data...
-                                    </td>
+                                    <th class="px-8 py-5 text-[10px] uppercase font-bold text-white/30 tracking-widest">Student ID</th>
+                                    <th class="px-8 py-5 text-[10px] uppercase font-bold text-white/30 tracking-widest">Password</th>
+                                    <th class="px-8 py-5 text-[10px] uppercase font-bold text-white/30 tracking-widest text-right">Actions</th>
                                 </tr>
-                            {:else if filteredUsers.length === 0}
-                                <tr>
-                                    <td colspan="3" class="px-8 py-20 text-center text-white/20 font-medium">
-                                        No students found matching your search.
-                                    </td>
-                                </tr>
-                            {:else}
-                                {#each filteredUsers as [id, pw]}
-                                    <tr class="hover:bg-white/[0.02] transition-all group">
-                                        <td class="px-8 py-5 font-bold text-indigo-100">{id}</td>
-                                        <td class="px-8 py-5 text-white/40 font-mono text-sm">{pw}</td>
-                                        <td class="px-8 py-5 text-right">
-                                            <button
-                                                on:click={() => deleteUser(id)}
-                                                class="px-4 py-2 rounded-lg bg-red-500/10 text-red-500 opacity-0 group-hover:opacity-100 hover:bg-red-500 text-[10px] font-bold uppercase transition-all hover:text-white"
-                                            >
-                                                Expel
-                                            </button>
+                            </thead>
+                            <tbody class="divide-y divide-white/5">
+                                {#if isLoading}
+                                    <tr>
+                                        <td colspan="3" class="px-8 py-20 text-center text-white/20 font-medium animate-pulse">
+                                            Downloading roster data...
                                         </td>
                                     </tr>
-                                {/each}
-                            {/if}
-                        </tbody>
-                    </table>
+                                {:else if filteredUsers.length === 0}
+                                    <tr>
+                                        <td colspan="3" class="px-8 py-20 text-center text-white/20 font-medium">
+                                            No students found matching your search.
+                                        </td>
+                                    </tr>
+                                {:else}
+                                    {#each filteredUsers as [id, pw]}
+                                        <tr class="hover:bg-white/[0.02] transition-all group">
+                                            <td class="px-8 py-5 font-bold text-indigo-100">{id}</td>
+                                            <td class="px-8 py-5 text-white/40 font-mono text-sm">{pw}</td>
+                                            <td class="px-8 py-5 text-right">
+                                                <button
+                                                    on:click={() => deleteUser(id)}
+                                                    class="px-4 py-2 rounded-lg bg-red-500/10 text-red-500 opacity-0 group-hover:opacity-100 hover:bg-red-500 text-[10px] font-bold uppercase transition-all hover:text-white"
+                                                >
+                                                    Expel
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    {/each}
+                                {/if}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
-        </main>
-    </div>
+            </main>
+        </div>
+    {:else if activeTab === 'mailbox'}
+        <div class="animate-fade-in">
+            <AdminMailbox />
+        </div>
+    {/if}
 </div>
 
 <style lang="scss">
@@ -232,6 +260,34 @@
         &:hover:not(:disabled) {
             transform: scale(1.02);
             filter: brightness(1.1);
+        }
+    }
+
+    .tab-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 24px;
+        border-radius: 12px;
+        border: none;
+        background: transparent;
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        .icon { font-size: 18px; }
+
+        &:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        &.active {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
     }
 

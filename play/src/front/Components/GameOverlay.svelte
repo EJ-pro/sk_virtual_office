@@ -18,6 +18,7 @@
     import { isActivatedStore as calendarIsActivatedStore, isCalendarVisibleStore } from "../Stores/CalendarStore";
     import { isActivatedStore as todoListIsActivatedStore, isTodoListVisibleStore } from "../Stores/TodoListStore";
     import { draggingFile } from "../Stores/FileUploadStore";
+    import { mailboxVisibleStore } from "../Stores/MailboxStore";
     import ChatSidebar from "../Chat/ChatSidebar.svelte";
     import LoginScene from "./Login/LoginScene.svelte";
     import MainLayout from "./MainLayout.svelte";
@@ -41,6 +42,7 @@
     import WokaScene from "./Woka/WokaScene.svelte";
     import Onboarding from "./Onboarding/Onboarding.svelte";
     import PwaInstallScreen from "./PwaInstall/PwaInstallScreen.svelte";
+    import Mailbox from "./Mailbox/Mailbox.svelte";
 
     export let game: Game;
 
@@ -134,6 +136,9 @@
     {/if}
     {#if $todoListIsActivatedStore && $isTodoListVisibleStore}
         <TodoList />
+    {/if}
+    {#if $mailboxVisibleStore}
+        <Mailbox />
     {/if}
 {/if}
 

@@ -18,6 +18,7 @@ import { analyticsClient } from "../Administration/AnalyticsClient";
 import { bannerStore, requestVisitCardsStore } from "../Stores/GameStore";
 import { modalIframeStore, modalVisibilityStore } from "../Stores/ModalStore";
 import { connectionManager } from "../Connection/ConnectionManager";
+import { openMailbox } from "../Stores/MailboxStore";
 
 import type { EnterLeaveEvent } from "./Events/EnterLeaveEvent";
 import type { OpenPopupEvent } from "./Events/OpenPopupEvent";
@@ -557,6 +558,8 @@ class IframeListener {
                     } else if (iframeEvent.type == "login") {
                         analyticsClient.login();
                         triggerInternalLogin();
+                    } else if (iframeEvent.type == "openMailbox") {
+                        openMailbox();
                     } else if (iframeEvent.type == "redirectPricing") {
                         if (connectionManager.currentRoom && connectionManager.currentRoom.pricingUrl) {
                             window.location.href = connectionManager.currentRoom.pricingUrl;

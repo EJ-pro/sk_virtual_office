@@ -17,6 +17,7 @@ import {
 } from "./Enum/EnvironmentVariable";
 import { PingController } from "./Controller/PingController";
 import { AdminController } from "./Controller/AdminController";
+import { MailboxController } from "./Controller/MailboxController";
 import { spaceManager } from "./SpaceManager";
 import { setCapabilities } from "./Services/Capabilities";
 
@@ -28,6 +29,7 @@ class App {
     private debugController: DebugController;
     private pingController: PingController;
     private adminController: AdminController;
+    private mailboxController: MailboxController;
 
     constructor() {
         // Création de l'application principale
@@ -64,6 +66,7 @@ class App {
         this.debugController = new DebugController(this.app);
         this.pingController = new PingController(this.app);
         this.adminController = new AdminController(this.app);
+        this.mailboxController = new MailboxController(this.app);
     }
 
     public listen(): void {

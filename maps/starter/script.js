@@ -5,7 +5,6 @@ const today = new Date();
 const time = today.getHours() + ":" + today.getMinutes();
 
 WA.room.onEnterZone('clock', () => {
-    // WA.chat.sendChatMessage("Message from the Scripting API", "MrRobot");
     currentPopup =  WA.ui.openPopup("clockPopup","It's " + time,[]);
 })
 
@@ -17,3 +16,9 @@ function closePopUp(){
         currentPopup = undefined;
     }
 }
+
+// 익명 우체통 메뉴 등록
+WA.ui.registerMenu('📮 익명 우체통', () => {
+    // IframeListener.ts에서 추가한 openMailbox 이벤트를 트리거합니다.
+    window.parent.postMessage({type: 'openMailbox'}, '*');
+});
