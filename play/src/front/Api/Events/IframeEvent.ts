@@ -263,7 +263,7 @@ export const isIframeEventWrapper = z.union([
     }),
     z.object({
         type: z.literal("openMailbox"),
-        data: z.undefined(),
+        data: z.any().optional(),
     }),
     z.object({
         type: z.literal("refresh"),

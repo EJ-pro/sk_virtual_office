@@ -309,6 +309,23 @@
                  "width":224,
                  "x":736,
                  "y":32
+                }, 
+                {
+                 "class":"area",
+                 "height":32,
+                 "id":10,
+                 "name":"mailbox",
+                 "properties":[
+                        {
+                         "name":"zone",
+                         "type":"string",
+                         "value":"mailbox"
+                        }],
+                 "rotation":0,
+                 "visible":true,
+                 "width":32,
+                 "x":448,
+                 "y":64
                 }],
          "opacity":1,
          "type":"objectgroup",

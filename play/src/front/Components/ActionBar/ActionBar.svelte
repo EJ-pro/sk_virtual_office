@@ -29,6 +29,7 @@
     import CloseChatMenuItem from "./MenuIcons/CloseChatMenuItem.svelte";
     import SilentBlock from "./SilentBlock.svelte";
     import PictureInPictureMenuItem from "./MenuIcons/PictureInPictureMenuItem.svelte";
+    import MailboxMenuItem from "./MenuIcons/MailboxMenuItem.svelte";
 
     let rightDiv: HTMLDivElement;
     let smallArrowVisible = true;
@@ -111,6 +112,8 @@
                             <CameraMenuItem />
                         {/if}
                         <!-- NAV : CAMERA END -->
+
+                        <MailboxMenuItem />
 
                         <!-- NAV : SCREENSHARING START -->
                         {#if $screenSharingAvailableStore}

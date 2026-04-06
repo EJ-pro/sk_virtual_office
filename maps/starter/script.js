@@ -22,3 +22,8 @@ WA.ui.registerMenu('📮 익명 우체통', () => {
     // IframeListener.ts에서 추가한 openMailbox 이벤트를 트리거합니다.
     window.parent.postMessage({type: 'openMailbox'}, '*');
 });
+
+// 익명 우체통 존(Zone) 진입 시 트리거
+WA.room.onEnterZone('mailbox', () => {
+    window.parent.postMessage({type: 'openMailbox'}, '*');
+});
