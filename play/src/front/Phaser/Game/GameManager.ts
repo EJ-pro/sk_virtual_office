@@ -473,7 +473,7 @@ export class GameManager {
 
     public async loadWokaData(): Promise<WokaData> {
         const roomUrl = gameManager.currentStartedRoom.href;
-        const response = await fetch(`${ABSOLUTE_PUSHER_URL}woka/list?roomUrl=${encodeURIComponent(roomUrl)}`, {
+        const response = await fetch(`${ABSOLUTE_PUSHER_URL}woka/list?roomUrl=${encodeURIComponent(roomUrl)}&t=${Date.now()}`, {
             headers: {
                 Authorization: localUserStore.getAuthToken() || "",
             },

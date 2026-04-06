@@ -34,7 +34,7 @@ export class CompanionTexturesLoadingManager {
             .json(
                 companionListMetakey(),
                 new URL(
-                    `companion/list?roomUrl=` + encodeURIComponent(gameManager.currentStartedRoom.href),
+                    `companion/list?roomUrl=` + encodeURIComponent(gameManager.currentStartedRoom.href) + `&t=${Date.now()}`,
                     ABSOLUTE_PUSHER_URL
                 ).toString(),
                 undefined,
