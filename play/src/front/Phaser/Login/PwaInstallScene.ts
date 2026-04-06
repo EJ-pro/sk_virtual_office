@@ -1,3 +1,4 @@
+import { loaderVisibleStore } from "../../Stores/LoaderStore";
 import { pwaInstallSceneVisibleStore } from "../../Stores/PwaInstallStore";
 import { gameManager } from "../Game/GameManager";
 import { ResizableScene } from "./ResizableScene";
@@ -15,6 +16,7 @@ export class PwaInstallScene extends ResizableScene {
 
     create() {
         pwaInstallSceneVisibleStore.set(true);
+        loaderVisibleStore.set(false);
 
         if (gameManager.currentStartedRoom?.backgroundColor != undefined) {
             this.cameras.main.setBackgroundColor(gameManager.currentStartedRoom.backgroundColor);

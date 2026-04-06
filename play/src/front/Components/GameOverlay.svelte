@@ -89,16 +89,22 @@
         </div>
     </div>
 {:else if $selectCompanionSceneVisibleStore}
-    <div class="absolute h-dvh w-dvw overflow-y-auto">
-        <SelectCompanionScene {game} />
+    <div style="position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; overflow: auto; z-index: 999999; pointer-events: none; display: block !important;">
+        <div style="pointer-events: auto;">
+            <SelectCompanionScene {game} />
+        </div>
     </div>
 {:else if $enableCameraSceneVisibilityStore}
-    <div class="absolute h-dvh w-dvw overflow-y-auto">
-        <EnableCameraScene {game} />
+    <div style="position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; overflow: auto; z-index: 999999; pointer-events: none; display: block !important;">
+        <div style="pointer-events: auto;">
+            <EnableCameraScene {game} />
+        </div>
     </div>
 {:else if $pwaInstallSceneVisibleStore}
-    <div class="absolute h-dvh w-dvw overflow-y-auto">
-        <PwaInstallScreen />
+    <div style="position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; overflow: auto; z-index: 999999; pointer-events: none; display: block !important;">
+        <div style="pointer-events: auto;">
+            <PwaInstallScreen />
+        </div>
     </div>
 {:else if $mapDeletedPromptStore}
     <MapDeletedPrompt />

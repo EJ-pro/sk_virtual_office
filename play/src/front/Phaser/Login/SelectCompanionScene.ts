@@ -1,3 +1,4 @@
+import { loaderProgressStore, loaderVisibleStore } from "../../Stores/LoaderStore";
 import type { CompanionTextureCollection } from "@workadventure/messages";
 import { Loader } from "../Components/Loader";
 import { gameManager } from "../Game/GameManager";
@@ -55,6 +56,7 @@ export class SelectCompanionScene extends ResizableScene {
             collectionsSizeStore.set(this.companionTextures.getCollectionsKeys().length);
             this.companionModels = companionLoadingManager.loadModels(this.load, this.companionTextures);
             selectCompanionSceneVisibleStore.set(true);
+            loaderVisibleStore.set(false);
         });
         this.loader.addLoader();
     }

@@ -1,3 +1,4 @@
+import { loaderVisibleStore } from "../../Stores/LoaderStore";
 import { gameManager } from "../Game/GameManager";
 import { enableCameraSceneVisibilityStore } from "../../Stores/MediaStore";
 import { analyticsClient } from "../../Administration/AnalyticsClient";
@@ -22,6 +23,7 @@ export class EnableCameraScene extends ResizableScene {
         });
 
         enableCameraSceneVisibilityStore.showEnableCameraScene();
+        loaderVisibleStore.set(false);
 
         if (gameManager.currentStartedRoom.backgroundColor != undefined) {
             this.cameras.main.setBackgroundColor(gameManager.currentStartedRoom.backgroundColor);
