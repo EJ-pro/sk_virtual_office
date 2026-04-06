@@ -29,10 +29,6 @@ import RequiresLoginForChatModal from "../../Chat/Components/RequiresLoginForCha
 import { analyticsClient } from "../../Administration/AnalyticsClient";
 import { IconCamera, IconUserPlus } from "@wa-icons";
 
-export enum RemotePlayerEvent {
-    Clicked = "Clicked",
-}
-
 /**
  * Class representing the sprite of a remote player (a player that plays on another computer)
  */
@@ -77,7 +73,6 @@ export class RemotePlayer extends Character implements ActivatableInterface {
             this.say(sayMessage.message, sayMessage.type);
         }
 
-        this.bindEventHandlers();
         this.pathFollowingUpdateCallback = this.followPath.bind(this);
     }
 
@@ -421,12 +416,4 @@ export class RemotePlayer extends Character implements ActivatableInterface {
     }
 
 
-    private bindEventHandlers(): void {
-        this.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
-            if (pointer.leftButtonDown()) {
-                this.emit(RemotePlayerEvent.Clicked);
-                this.activate();
-            }
-        });
-    }
 }
