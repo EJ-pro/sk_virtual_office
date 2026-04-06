@@ -5,7 +5,9 @@ import type CancelablePromise from "cancelable-promise";
 import type { AvailabilityStatus as AvailabilityStatusType } from "@workadventure/messages";
 import { SayMessageType, AvailabilityStatus, PositionMessage_Direction } from "@workadventure/messages";
 import { defaultWoka, Deferred } from "@workadventure/shared-utils";
+import { duelStore } from "../../Stores/DuelStore";
 import { currentPlayerWokaStore } from "../../Stores/CurrentPlayerWokaStore";
+
 import { PlayerStatusDot } from "../Components/PlayerStatusDot";
 import { TalkIcon } from "../Components/TalkIcon";
 import type { OutlineableInterface } from "../Game/OutlineableInterface";
@@ -747,6 +749,9 @@ export abstract class Character extends Container implements OutlineableInterfac
                 break;
         }
 
+        let hitDetected = false;
+        const duel = get(duelStore);
+
         this.scene.tweens.add({
             targets: ball,
             x: targetX,
@@ -754,6 +759,21 @@ export abstract class Character extends Container implements OutlineableInterfac
             angle: 360,
             duration: 500,
             ease: "Power1",
+            onUpdate: () => {
+                if (hitDetected || duel.status !== "DUELING") return;
+
+                // Check for collision with the opponent
+                const opponentActor = this.scene.MapPlayersByKey.get(duel.opponentId ?? -1);
+                if (opponentActor) {
+                    const dist = Phaser.Math.Distance.Between(ball.x, ball.y, opponentActor.x, opponentActor.y);
+                    if (dist < 32) {
+                        hitDetected = true;
+                        // Emit a hit event for others to see
+                        this.scene.connection?.emitEmoteEvent("duel_hit");
+                        duelStore.addMyHit();
+                    }
+                }
+            },
             onComplete: () => {
                 this.scene.tweens.add({
                     targets: ball,
@@ -766,6 +786,7 @@ export abstract class Character extends Container implements OutlineableInterfac
                 });
             },
         });
+
     }
 }
 

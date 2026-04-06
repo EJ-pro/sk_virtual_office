@@ -35,8 +35,12 @@
     import { showRecordingList } from "../Stores/RecordingStore";
     import { toastStore } from "../Stores/ToastStore";
     import { meetingInvitationRequestStore } from "../Stores/MeetingInvitationStore";
+    import { duelStore } from "../Stores/DuelStore";
     import { mapEditorSideBarWidthStore } from "./MapEditor/MapEditorSideBarWidthStore";
     import ActionBar from "./ActionBar/ActionBar.svelte";
+    import DuelHUD from "./Duel/DuelHUD.svelte";
+    import DuelRequestPopup from "./Duel/DuelRequestPopup.svelte";
+
 
     import HelpWebRtcSettingsPopup from "./HelpSettings/HelpWebRtcSettingsPopup.svelte";
     import HelpNotificationSettingsPopup from "./HelpSettings/HelpNotificationSettingPopup.svelte";
@@ -271,9 +275,14 @@
                     {#if $meetingInvitationRequestStore}
                         <MeetingInvitationPopup />
                     {/if}
+                    {#if $duelStore.status === "RECEIVED_REQUEST"}
+                        <DuelRequestPopup />
+                    {/if}
                 </div>
             {/if}
+            <DuelHUD />
             <ExternalComponents zone="centeredPopup" />
+
 
             <ExplorerMenu />
         </section>

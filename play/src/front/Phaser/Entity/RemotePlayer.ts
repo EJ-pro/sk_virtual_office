@@ -11,7 +11,9 @@ import { PositionMessage_Direction as PositionMessageDirection } from "@workadve
 import { openModal } from "svelte-modals";
 import type { WokaMenuAction } from "../../Stores/WokaMenuStore";
 import { wokaMenuStore } from "../../Stores/WokaMenuStore";
+import { duelStore } from "../../Stores/DuelStore";
 import { Character } from "../Entity/Character";
+
 import type { GameScene } from "../Game/GameScene";
 import { WOKA_SPEED } from "../../Enum/EnvironmentVariable";
 import type { ActivatableInterface } from "../Game/ActivatableInterface";
@@ -402,9 +404,23 @@ export class RemotePlayer extends Character implements ActivatableInterface {
             },
             actionIcon: IconUserPlus,
         });
+        // Add action for 1:1 Duel
+        actions.push({
+            actionName: "1:1 대결 신청",
+            protected: false,
+            priority: 4,
+            style: "bg-gradient-to-r from-red-600/40 to-blue-600/40 hover:from-red-600/60 hover:to-blue-600/60 text-white font-bold",
+            callback: () => {
+                this.scene.connection?.emitEmoteEvent(`duel_request:${this.userUuid}`);
+                duelStore.requestDuel(this.userId, this.playerName);
+            },
+
+            actionIcon: IconUserPlus, // Using UserPlus for now
+        });
 
         return actions;
     }
+
 
     private bindEventHandlers(): void {
         this.on(Phaser.Input.Events.POINTER_DOWN, (event: Phaser.Input.Pointer) => {
