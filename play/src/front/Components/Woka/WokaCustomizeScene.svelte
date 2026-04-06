@@ -245,6 +245,7 @@
     }
 
     onMount(async () => {
+        console.info("WokaCustomizeScene.svelte: onMount() called");
         await loadWokaData();
         selectedBodyPart = bodyPartOrder[0];
         // Document event listener for keyboard navigation

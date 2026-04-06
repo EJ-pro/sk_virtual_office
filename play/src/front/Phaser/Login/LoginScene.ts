@@ -24,23 +24,10 @@ export class LoginScene extends ResizableScene {
     preload() {}
 
     create() {
-        loaderVisibleStore.set(false);
+        console.info("LoginScene: create() starting");
         loginSceneVisibleIframeStore.set(false);
-        /*
-        //If authentication is mandatory, push authentication iframe
-        if (
-            localUserStore.getAuthToken() == undefined &&
-            gameManager.currentStartedRoom &&
-            gameManager.currentStartedRoom.authenticationMandatory
-        ) {
-            const redirect = connectionManager.loadOpenIDScreen(false);
-            if (redirect !== null) {
-                window.location.assign(redirect.toString());
-            }
-            loginSceneVisibleIframeStore.set(true);
-        }
-        */
         loginSceneVisibleStore.set(true);
+        loaderVisibleStore.set(false);
 
         if (gameManager.currentStartedRoom?.backgroundColor != undefined) {
             this.cameras.main.setBackgroundColor(gameManager.currentStartedRoom.backgroundColor);

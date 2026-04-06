@@ -1,0 +1,38 @@
+﻿
+> workadventure-play@1.0.0 build
+> echo "Compiling with options: $NODE_OPTIONS " && cross-env vite build
+
+"Compiling with options: $NODE_OPTIONS " 
+node.exe : 'cross-env'은(는) 내부 
+또는 외부 명령, 실행할 수 있는 프로그램, 또는
+위치 줄:1 문자:1
++ & "C:\Program Files\nodejs/n
+ode.exe" "C:\Program Files\nod
+ejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~
+    + CategoryInfo          : 
+    NotSpecified: ('cross-en  
+  v'은(는)...할 수 있는 프로그램, 또는:   
+ String) [], RemoteExcepti    
+on
+    + FullyQualifiedErrorId : 
+    NativeCommandError
+ 
+배치 파일이 아닙니다.
+npm error Lifecycle script `bu
+ild` failed with error:
+npm error code 1
+npm error path C:\Users\Playda
+ta\sk_virtual_office\play
+npm error workspace workadvent
+ure-play@1.0.0
+npm error location C:\Users\Pl
+aydata\sk_virtual_office\play
+npm error command failed
+npm error command C:\WINDOWS\s
+ystem32\cmd.exe /d /s /c echo 
+"Compiling with options: $NODE
+_OPTIONS " && cross-env vite b
+uild
