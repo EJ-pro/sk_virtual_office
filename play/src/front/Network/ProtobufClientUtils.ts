@@ -21,4 +21,19 @@ export class ProtobufClientUtils {
                 throw new Error("Unexpected direction");
         }
     }
+
+    public static toDirection(direction: string): PositionMessage_Direction {
+        switch (direction) {
+            case "up":
+                return PositionMessage_Direction.UP;
+            case "down":
+                return PositionMessage_Direction.DOWN;
+            case "left":
+                return PositionMessage_Direction.LEFT;
+            case "right":
+                return PositionMessage_Direction.RIGHT;
+            default:
+                throw new Error("Unexpected direction string: " + direction);
+        }
+    }
 }

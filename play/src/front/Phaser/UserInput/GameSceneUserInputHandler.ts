@@ -18,6 +18,8 @@ import LL from "../../../i18n/i18n-svelte";
 import { followRoleStore, followStateStore, followUsersStore } from "../../Stores/FollowStore";
 import { localUserStore } from "../../Connection/LocalUserStore";
 import type { Shortcut } from "./UserInputManager";
+import { ProtobufClientUtils } from "../../Network/ProtobufClientUtils";
+import { PositionMessage_Direction } from "@workadventure/messages";
 
 export class GameSceneUserInputHandler implements UserInputHandlerInterface {
     private gameScene: GameScene;
@@ -98,14 +100,9 @@ export class GameSceneUserInputHandler implements UserInputHandlerInterface {
             {
                 key: "Q",
                 description: "Throw Monster Ball",
-                callback: () => {
-                    const direction = this.gameScene.CurrentPlayer.getDirection();
-                    const directionStr = ProtobufClientUtils.toDirectionString(direction);
-                    this.gameScene.connection?.emitEmoteEvent(`monster_ball:${directionStr}`);
-                    this.gameScene.CurrentPlayer.throwMonsterBall();
-                },
             },
         ];
+
     }
 
     public handleMouseWheelEvent(
@@ -276,8 +273,10 @@ export class GameSceneUserInputHandler implements UserInputHandlerInterface {
                 break;
             }
             case "KeyQ": {
+                const direction = this.gameScene.CurrentPlayer.getDirection();
+                const directionStr = ProtobufClientUtils.toDirectionString(direction);
+                this.gameScene.connection?.emitEmoteEvent(`monster_ball:${directionStr}`);
                 this.gameScene.CurrentPlayer.throwMonsterBall();
-                this.gameScene.connection?.emitEmoteEvent("monster_ball");
                 break;
             }
 

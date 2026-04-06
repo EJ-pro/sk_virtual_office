@@ -2,10 +2,9 @@ import type { Subscription } from "rxjs";
 import type { RoomConnection } from "../../Connection/RoomConnection";
 import { localUserStore } from "../../Connection/LocalUserStore";
 import { duelStore } from "../../Stores/DuelStore";
+import { ProtobufClientUtils } from "../../Network/ProtobufClientUtils";
+import { PositionMessage_Direction } from "@workadventure/messages";
 import type { GameScene } from "./GameScene";
-
-
-
 
 export class EmoteManager {
     private subscription: Subscription;
@@ -14,8 +13,14 @@ export class EmoteManager {
         this.subscription = connection.emoteEventMessageStream.subscribe((event) => {
             const actor = this.scene.MapPlayersByKey.get(event.actorUserId);
             if (actor) {
-                if (event.emote === "monster_ball") {
-                    actor.throwMonsterBall();
+                if (event.emote.startsWith("monster_ball")) {
+                    const parts = event.emote.split(":");
+                    const directionStr = parts[1];
+                    let direction: PositionMessage_Direction | undefined = undefined;
+                    if (directionStr) {
+                         direction = ProtobufClientUtils.toDirection(directionStr);
+                    }
+                    actor.throwMonsterBall(direction);
                 } else if (event.emote.startsWith("duel_request")) {
                     const parts = event.emote.split(":");
                     const targetUuid = parts[1];
@@ -25,22 +30,16 @@ export class EmoteManager {
                         duelStore.receiveRequest(event.actorUserId, actor.playerName);
                     }
                 } else if (event.emote === "duel_accept") {
-
                     duelStore.startDuel();
                 } else if (event.emote === "duel_hit") {
-                    // event.actorUserId is the one who got hit?
-                    // Let's say if I get hit, I emit "duel_hit".
-                    // So if actor is ME, addMyHit(). If actor is OPPONENT, addOpponentHit().
-                    // Wait, logic is subjective to who receives it.
-                    // Let's use simple: if actor is NOT me, it means they got hit.
+                    // if someone else emits duel_hit, it means THEY got hit.
+                    // (Assuming symmetric logic for now)
                     duelStore.addOpponentHit();
                 } else {
                     actor.playEmote(event.emote);
                 }
-
             }
         });
-
     }
 
     destroy() {
