@@ -1,7 +1,13 @@
 <script lang="ts">
     import LL from "../../../i18n/i18n-svelte";
     import messageSmileyImg from "../images/message-smiley.svg";
-    import { analyticsClient } from "../../Administration/AnalyticsClient";
+    import { triggerInternalLogin } from "../../Utils/AuthUtils";
+
+    function goToLogin(e: MouseEvent) {
+        e.preventDefault();
+        analyticsClient.login();
+        triggerInternalLogin();
+    }
 </script>
 
 <div class="flex-col items-center justify-center text-center px-4 py-12">
@@ -14,14 +20,13 @@
         </slot>
     </div>
     <div class="flex justify-center">
-        <a
+        <button
             class="flex justify-center rounded-lg h-10 bg-secondary hover:bg-secondary-800 hover:no-underline hover:text-white no-underline transition-all items-center my-4 text-base px-8 text-white"
-            href="/login"
-            on:click={() => analyticsClient.login()}
+            on:click={goToLogin}
         >
             <slot name="button-label">
                 {$LL.menu.profile.login()}
             </slot>
-        </a>
+        </button>
     </div>
 </div>

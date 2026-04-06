@@ -332,7 +332,10 @@ class LocalUserStore {
     }
 
     isLogged(): boolean {
-        return this.jwt?.accessToken !== undefined && this.jwt?.accessToken !== null;
+        // Return true if we have a real JWT token OR if we have entered a name (our custom login flow)
+        const hasToken = this.jwt?.accessToken !== undefined && this.jwt?.accessToken !== null;
+        const hasName = this.getName() !== null && this.getName() !== "";
+        return hasToken || hasName;
     }
 
     private static parseJwt(token: string) {
