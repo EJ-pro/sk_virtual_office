@@ -172,19 +172,13 @@ export abstract class Character extends Container implements OutlineableInterfac
                 return;
             }
 
-            // Todo: Replace the font family with a better one
-            // Use larger font size for non-Latin characters (Arabic, CJK, etc.) for better readability
-            const fontSize = StringUtils.containsNonLatinCharacters(name) ? "11px" : "8px";
+            // Use larger font size and better font family for Korean characters for better readability
+            const fontSize = StringUtils.containsNonLatinCharacters(name) ? "13px" : "9px";
             this.playerNameText = new Text(scene, 0, playerNameY, name, {
-                fontFamily: '"Press Start 2P"',
+                fontFamily: '"Press Start 2P", "Poppins", "Roboto", "Arial", sans-serif',
                 fontSize,
-                strokeThickness: 2,
+                strokeThickness: 1.2,
                 stroke: "#14304C",
-                metrics: {
-                    ascent: 20,
-                    descent: 10,
-                    fontSize: 35,
-                },
             });
 
             this.playerNameText.setOrigin(0.5).setDepth(DEPTH_INGAME_TEXT_INDEX);
