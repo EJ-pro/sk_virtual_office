@@ -53,6 +53,5 @@
             거절
         </button>
     </div>
-        </div>
     </div>
 </div>

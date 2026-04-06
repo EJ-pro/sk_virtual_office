@@ -258,7 +258,7 @@
             {/if}
 
             <ExternalComponents zone="popup" />
-            {#if $requestVisitCardsStore || $wokaMenuStore || $actionsMenuStore || $meetingInvitationRequestStore || $duelStore.status === "RECEIVED_REQUEST"}
+            {#if $requestVisitCardsStore || $wokaMenuStore || $actionsMenuStore || $meetingInvitationRequestStore}
 
                 <div
                     transition:fly={{ x: 210, duration: 500 }}
