@@ -44,7 +44,9 @@ export class CompanionTextures {
     public getCompanionCollectionAndIndexByCompanionId(id: string): [string, number] | undefined {
         for (const [key, value] of this.companionCollections.entries()) {
             for (let i = 0; i < value.length; i++) {
-                return [key, i];
+                if (value[i].id === id) {
+                    return [key, i];
+                }
             }
         }
         return undefined;

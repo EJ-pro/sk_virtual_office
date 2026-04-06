@@ -44,6 +44,12 @@
         "name": "po1",
         "behavior": "dog",
         "url": "resources/characters/pipoya/Po 01-1.png"
+      },
+      {
+        "id": "po2",
+        "name": "po2",
+        "behavior": "dog",
+        "url": "resources/characters/pipoya/Po 01-2.png"
       }
     ]
   }
