@@ -39,20 +39,19 @@ function createWokaMenuStore() {
                 if (data === undefined) return data;
 
                 const dataWithUuid = { ...action, uuid: action.uuid ?? v4() };
-                data.actions = [...data.actions, dataWithUuid];
-                return data;
+                return {
+                    ...data,
+                    actions: [...data.actions, dataWithUuid]
+                };
             });
         },
         removeAction: (actionName: string) => {
             update((data) => {
                 if (!data) return data;
-                const index = data.actions.findIndex((action) => {
-                    return action.actionName === actionName;
-                });
-                if (index == undefined || index === -1) return data;
-
-                data.actions = [...data.actions.splice(index, 1)];
-                return data;
+                return {
+                    ...data,
+                    actions: data.actions.filter(action => action.actionName !== actionName)
+                };
             });
         },
         /**

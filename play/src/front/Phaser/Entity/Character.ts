@@ -58,6 +58,10 @@ export abstract class Character extends Container implements OutlineableInterfac
     private clickable: boolean;
     public companion?: Companion;
     private emote: Phaser.GameObjects.DOMElement | null = null;
+
+    public getDirection(): PositionMessage_Direction {
+        return this._lastDirection;
+    }
     private emoteTween: Phaser.Tweens.Tween | null = null;
     private texts: Map<string, Phaser.GameObjects.DOMElement> = new Map();
     private textsToBuild = new Map();
@@ -725,7 +729,7 @@ export abstract class Character extends Container implements OutlineableInterfac
         };
     }
 
-    public throwMonsterBall() {
+    public throwMonsterBall(direction?: PositionMessage_Direction) {
         const ball = new Sprite(this.scene, this.x, this.y, "monster_ball");
         ball.setDepth(this.depth + 1);
         this.scene.add.existing(ball);
@@ -734,7 +738,9 @@ export abstract class Character extends Container implements OutlineableInterfac
         let targetX = this.x;
         let targetY = this.y;
 
-        switch (this._lastDirection) {
+        const throwDirection = direction ?? this._lastDirection;
+
+        switch (throwDirection) {
             case PositionMessage_Direction.UP:
                 targetY -= distance;
                 break;

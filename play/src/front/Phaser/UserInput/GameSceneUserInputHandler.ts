@@ -98,9 +98,14 @@ export class GameSceneUserInputHandler implements UserInputHandlerInterface {
             {
                 key: "Q",
                 description: "Throw Monster Ball",
+                callback: () => {
+                    const direction = this.gameScene.CurrentPlayer.getDirection();
+                    const directionStr = ProtobufClientUtils.toDirectionString(direction);
+                    this.gameScene.connection?.emitEmoteEvent(`monster_ball:${directionStr}`);
+                    this.gameScene.CurrentPlayer.throwMonsterBall();
+                },
             },
         ];
-
     }
 
     public handleMouseWheelEvent(

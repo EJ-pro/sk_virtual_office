@@ -422,8 +422,8 @@ export class RemotePlayer extends Character implements ActivatableInterface {
 
 
     private bindEventHandlers(): void {
-        this.on(Phaser.Input.Events.POINTER_DOWN, (event: Phaser.Input.Pointer) => {
-            if (event.downElement.nodeName === "CANVAS" && event.leftButtonDown()) {
+        this.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+            if (pointer.leftButtonDown()) {
                 this.emit(RemotePlayerEvent.Clicked);
                 this.activate();
             }
