@@ -94,7 +94,13 @@ export class GameSceneUserInputHandler implements UserInputHandlerInterface {
                 key: "F",
                 description: get(LL).menu.shortcuts.follow(),
             },
+            // Q - Monster Ball
+            {
+                key: "Q",
+                description: "Throw Monster Ball",
+            },
         ];
+
     }
 
     public handleMouseWheelEvent(
@@ -264,7 +270,14 @@ export class GameSceneUserInputHandler implements UserInputHandlerInterface {
                 this.handleKeyF();
                 break;
             }
+            case "KeyQ": {
+                this.gameScene.CurrentPlayer.throwMonsterBall();
+                this.gameScene.connection?.emitEmoteEvent("monster_ball");
+                break;
+            }
+
             default: {
+
                 break;
             }
         }

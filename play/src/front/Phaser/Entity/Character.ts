@@ -722,4 +722,50 @@ export abstract class Character extends Container implements OutlineableInterfac
             height: body.height,
         };
     }
+
+    public throwMonsterBall() {
+        const ball = new Sprite(this.scene, this.x, this.y, "monster_ball");
+        ball.setDepth(this.depth + 1);
+        this.scene.add.existing(ball);
+
+        const distance = 200;
+        let targetX = this.x;
+        let targetY = this.y;
+
+        switch (this._lastDirection) {
+            case PositionMessage_Direction.UP:
+                targetY -= distance;
+                break;
+            case PositionMessage_Direction.DOWN:
+                targetY += distance;
+                break;
+            case PositionMessage_Direction.LEFT:
+                targetX -= distance;
+                break;
+            case PositionMessage_Direction.RIGHT:
+                targetX += distance;
+                break;
+        }
+
+        this.scene.tweens.add({
+            targets: ball,
+            x: targetX,
+            y: targetY,
+            angle: 360,
+            duration: 500,
+            ease: "Power1",
+            onComplete: () => {
+                this.scene.tweens.add({
+                    targets: ball,
+                    alpha: 0,
+                    scale: 0.5,
+                    duration: 200,
+                    onComplete: () => {
+                        ball.destroy();
+                    },
+                });
+            },
+        });
+    }
 }
+

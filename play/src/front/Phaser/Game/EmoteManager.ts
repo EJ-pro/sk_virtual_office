@@ -9,9 +9,14 @@ export class EmoteManager {
         this.subscription = connection.emoteEventMessageStream.subscribe((event) => {
             const actor = this.scene.MapPlayersByKey.get(event.actorUserId);
             if (actor) {
-                actor.playEmote(event.emote);
+                if (event.emote === "monster_ball") {
+                    actor.throwMonsterBall();
+                } else {
+                    actor.playEmote(event.emote);
+                }
             }
         });
+
     }
 
     destroy() {

@@ -458,6 +458,8 @@ export class GameScene extends DirtyScene {
         this.load.image("iconSpeakerMegaphone", "/resources/icons/icon_speaker.png");
         this.load.image("iconSilent", "/resources/icons/icon_silent.png");
         this.load.image("iconMeeting", "/resources/icons/icon_meeting.png");
+        this.load.image("monster_ball", "/resources/objects/monster_ball.png");
+
 
         if (touchScreenManager.supportTouchScreen) {
             this.load.image(joystickBaseKey, joystickBaseImg);
