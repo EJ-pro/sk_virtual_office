@@ -149,16 +149,11 @@ export class UserInputManager {
             },
             {
                 event: UserInputEvent.MoveLeft,
-                keyInstance: this.scene.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.Q, false),
-                key: "Q",
-                description: get(LL).menu.shortcuts.moveLeft(),
-            },
-            {
-                event: UserInputEvent.MoveLeft,
                 keyInstance: this.scene.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.A, false),
                 key: "A",
                 description: get(LL).menu.shortcuts.moveLeft(),
             },
+
             {
                 event: UserInputEvent.MoveDown,
                 keyInstance: this.scene.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.S, false),
