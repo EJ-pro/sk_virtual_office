@@ -182,7 +182,6 @@
     }
 
     onMount(() => {
-        console.info("WokaSelectScene.svelte: onMount() called");
         loadWokaData().catch((err) => {
             console.error("Error in onMount while loading Woka data:", err);
         });

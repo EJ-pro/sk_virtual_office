@@ -19,7 +19,6 @@ export abstract class AbstractCharacterScene extends ResizableScene {
     }
 
     create() {
-        console.info("AbstractCharacterScene: create() starting");
         if (gameManager.currentStartedRoom.backgroundColor != undefined) {
             this.cameras.main.setBackgroundColor(gameManager.currentStartedRoom.backgroundColor);
         }

@@ -78,20 +78,12 @@
     </div>
 {:else if $loginSceneVisibleStore}
     <div style="position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; overflow: auto; z-index: 999999; pointer-events: none; display: block !important;">
-        {console.log("GameOverlay: Rendering LoginScene branch")}
-        <div style="background-color: red; color: white; padding: 10px; position: absolute; top: 0; left: 0; z-index: 100000; pointer-events: auto;">
-            UI LAYER TEST: LOGIN VISIBLE (Z:999999)
-        </div>
         <div style="pointer-events: auto;">
             <LoginScene {game} />
         </div>
     </div>
 {:else if $selectCharacterSceneVisibleStore}
     <div style="position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; overflow: auto; z-index: 999999; pointer-events: none; display: block !important;">
-        {console.log("GameOverlay: Rendering WokaScene branch")}
-        <div style="background-color: red; color: white; padding: 10px; position: absolute; top: 0; left: 0; z-index: 100000; pointer-events: auto;">
-            UI LAYER TEST: WOKA VISIBLE (Z:999999)
-        </div>
         <div style="pointer-events: auto;">
             <WokaScene />
         </div>

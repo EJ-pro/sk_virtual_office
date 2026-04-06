@@ -49,14 +49,7 @@
     }
 
     let legalString: string | undefined;
-    console.info("LoginScene.svelte: static script evaluation");
     onMount(() => {
-        console.info("LoginScene.svelte: onMount() called");
-        console.info("LoginScene.svelte: $LL keys:", Object.keys($LL));
-        console.info("LoginScene.svelte: $LL.login exists:", !!$LL.login);
-        if ($LL.login) {
-            console.info("LoginScene.svelte: $LL.login.continue exists:", !!$LL.login.continue);
-        }
         if (legalStrings.length > 0) {
             if (Intl.ListFormat) {
                 const formatter = new Intl.ListFormat($locale, { style: "long", type: "conjunction" });

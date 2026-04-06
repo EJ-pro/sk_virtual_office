@@ -24,7 +24,6 @@ export class LoginScene extends ResizableScene {
     preload() {}
 
     create() {
-        console.info("LoginScene: create() starting");
         loginSceneVisibleIframeStore.set(false);
         loginSceneVisibleStore.set(true);
         loaderVisibleStore.set(false);

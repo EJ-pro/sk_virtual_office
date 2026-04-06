@@ -24,7 +24,6 @@ export class SelectCharacterScene extends AbstractCharacterScene {
     }
 
     public create() {
-        console.info("SelectCharacterScene: create() starting");
         super.create();
         waScaleManager.zoomModifier = 1;
         selectCharacterSceneVisibleStore.set(true);
