@@ -77,14 +77,24 @@
         <ErrorDialog />
     </div>
 {:else if $loginSceneVisibleStore}
-    <div class="absolute h-dvh w-dvw overflow-y-auto z-[100]">
-        <div class="bg-red-500 text-white p-2 absolute top-0 left-0 z-[101]">UI LAYER TEST: LOGIN VISIBLE</div>
-        <LoginScene {game} />
+    <div style="position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; overflow: auto; z-index: 999999; pointer-events: none; display: block !important;">
+        {console.log("GameOverlay: Rendering LoginScene branch")}
+        <div style="background-color: red; color: white; padding: 10px; position: absolute; top: 0; left: 0; z-index: 100000; pointer-events: auto;">
+            UI LAYER TEST: LOGIN VISIBLE (Z:999999)
+        </div>
+        <div style="pointer-events: auto;">
+            <LoginScene {game} />
+        </div>
     </div>
 {:else if $selectCharacterSceneVisibleStore}
-    <div class="absolute h-dvh w-dvw overflow-y-auto z-[100]">
-        <div class="bg-red-500 text-white p-2 absolute top-0 left-0 z-[101]">UI LAYER TEST: WOKA VISIBLE</div>
-        <WokaScene />
+    <div style="position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; overflow: auto; z-index: 999999; pointer-events: none; display: block !important;">
+        {console.log("GameOverlay: Rendering WokaScene branch")}
+        <div style="background-color: red; color: white; padding: 10px; position: absolute; top: 0; left: 0; z-index: 100000; pointer-events: auto;">
+            UI LAYER TEST: WOKA VISIBLE (Z:999999)
+        </div>
+        <div style="pointer-events: auto;">
+            <WokaScene />
+        </div>
     </div>
 {:else if $selectCompanionSceneVisibleStore}
     <div class="absolute h-dvh w-dvw overflow-y-auto">
