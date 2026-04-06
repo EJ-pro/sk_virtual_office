@@ -154,6 +154,12 @@
                         "name": "po1",
                         "url": "resources/characters/pipoya/Po 01-1.png",
                         "position": 24
+                    },
+                    {
+                        "id": "po2",
+                        "name": "po2",
+                        "url": "resources/characters/pipoya/Po 01-2.png",
+                        "position": 25
                     }
                 ]
             }
