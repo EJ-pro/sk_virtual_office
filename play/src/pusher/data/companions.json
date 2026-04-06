@@ -39,6 +39,13 @@
         "behavior": "cat",
         "url": "resources/characters/pipoya/Cat 01-3.png"
       },
+      
+      {
+        "id": "po0",
+        "name": "po0",
+        "behavior": "dog",
+        "url": "resources/characters/pipoya/Po 01-0.png"
+      },
       {
         "id": "po1",
         "name": "po1",
@@ -50,6 +57,48 @@
         "name": "po2",
         "behavior": "dog",
         "url": "resources/characters/pipoya/Po 01-2.png"
+      },      
+      {
+        "id": "po3",
+        "name": "po3",
+        "behavior": "dog",
+        "url": "resources/characters/pipoya/Po 01-3.png"
+      },
+      {
+        "id": "po4",
+        "name": "po4",
+        "behavior": "dog",
+        "url": "resources/characters/pipoya/Po 01-4.png"
+      },
+      {
+        "id": "po5",
+        "name": "po5",
+        "behavior": "dog",
+        "url": "resources/characters/pipoya/Po 01-5.png"
+      },
+      {
+        "id": "po6",
+        "name": "po6",
+        "behavior": "dog",
+        "url": "resources/characters/pipoya/Po 01-6.png"
+      },
+      {
+        "id": "po7",
+        "name": "po7",
+        "behavior": "dog",
+        "url": "resources/characters/pipoya/Po 01-7.png"
+      },
+      {
+        "id": "po8",
+        "name": "po8",
+        "behavior": "dog",
+        "url": "resources/characters/pipoya/Po 01-8.png"
+      },
+      {
+        "id": "po9",
+        "name": "po9",
+        "behavior": "dog",
+        "url": "resources/characters/pipoya/Po 01-9.png"
       }
     ]
   }
