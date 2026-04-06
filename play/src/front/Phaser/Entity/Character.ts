@@ -172,15 +172,20 @@ export abstract class Character extends Container implements OutlineableInterfac
                 return;
             }
 
-            const fontSize = StringUtils.containsNonLatinCharacters(name) ? "11px" : "9px";
+            const fontSize = StringUtils.containsNonLatinCharacters(name) ? "12px" : "10px";
             this.playerNameText = new Text(scene, 0, playerNameY, name, {
-                fontFamily: '"Poppins", "Roboto", "Arial", sans-serif',
+                fontFamily: 'Inter, Pretendard, "Noto Sans KR", Roboto, Arial, sans-serif',
                 fontSize,
-                strokeThickness: 1,
-                stroke: "#14304C",
+                color: '#ffffff',
+                stroke: '#000000',
+                strokeThickness: 3,
             });
 
-            this.playerNameText.setOrigin(0.5).setDepth(DEPTH_INGAME_TEXT_INDEX).setResolution(2);
+            this.playerNameText
+                .setOrigin(0.5)
+                .setDepth(DEPTH_INGAME_TEXT_INDEX)
+                .setResolution(2)
+                .setShadow(0, 0, "#000000", 2, true, true);
             this.add([this.playerNameText]);
 
             // Reposition status dot and megaphone icon
