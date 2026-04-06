@@ -156,6 +156,7 @@ export class GameManager {
         let shouldShowPwaInstall = false;
         pwaInstallProfileMenuEligibleStore.set(shouldShowPwaInstall);
 
+        /*
         const pwaInstallEligibilityPromise = shouldShowPwaInstallSceneAsync({
             bypassPwa: this.startRoom.bypassPwa,
         })
@@ -177,6 +178,7 @@ export class GameManager {
                 Sentry.captureException(error);
             }
         }
+        */
 
         if (this.playerName && localUserStore.getAuthToken() && shouldShowPwaInstall) {
             return PwaInstallSceneName;

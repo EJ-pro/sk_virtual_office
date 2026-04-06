@@ -270,12 +270,6 @@
             </div>
         </div>
 
-        <!-- Powered By -->
-        {#if logo !== logoImg && gameManager.currentStartedRoom.showPoweredBy !== false}
-            <div class="mt-6 flex justify-center opacity-30 hover:opacity-100 transition-opacity duration-500">
-                <img draggable="false" src={poweredByWorkAdventureImg} alt="Powered by WorkAdventure" class="h-10" />
-            </div>
-        {/if}
     </div>
 </section>
 
