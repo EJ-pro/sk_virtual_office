@@ -259,10 +259,8 @@
     });
 </script>
 
-<div class="mobile-webkit bg-contrast w-screen md:!mt-[15vh] h-full md:!h-[70vh] flex items-center justify-center">
-    <div
-        class="mobile-webkit rounded-lg flex flex-col max-w-4xl w-full h-full m-4 relative bg-white/10 backdrop-blur-md"
-    >
+<div class="absolute inset-0 z-20 flex flex-col items-center justify-center p-4 bg-slate-900 shadow-2xl overflow-y-auto">
+    <div class="w-full max-w-4xl mobile-webkit rounded-lg flex flex-col relative bg-white/10 backdrop-blur-md" style="min-height: 70vh;">
         {#if isLoading}
             <div class="flex items-center justify-center h-64">
                 <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500" />
