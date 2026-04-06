@@ -154,30 +154,13 @@ class ConnectionManager {
      * Logout
      */
     public logout() {
-        // save the current token to use it in the redirect logout url
-        const tokenTmp = localUserStore.getAuthToken();
-        //remove token in localstorage
-        localUserStore.setAuthToken(null);
         userIsConnected.set(false);
         localUserStore.setName("");
-
-        // check if we are in a room and have a token to logout from OIDC
-        if (!ENABLE_OPENID || !this._currentRoom || !tokenTmp) {
-            window.location.assign("/");
-            return;
-        }
-        // redirect to logout url
-        const redirectUrl = new URL(`${this._currentRoom.opidLogoutRedirectUrl}`, window.location.href);
-        redirectUrl.searchParams.append("playUri", this._currentRoom.key);
-        redirectUrl.searchParams.append("token", tokenTmp ?? "");
-
-        gameManager
-            .logout()
-            .catch((e) => {
-                console.error(e);
-                Sentry.captureException(e);
-            })
-            .finally(() => window.location.assign(redirectUrl));
+        localUserStore.setAuthToken(null);
+        
+        // Always redirect back to the home map / login scene within our own app
+        window.location.assign("/");
+        return;
     }
 
     /**
