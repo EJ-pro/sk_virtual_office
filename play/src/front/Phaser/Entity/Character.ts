@@ -172,16 +172,15 @@ export abstract class Character extends Container implements OutlineableInterfac
                 return;
             }
 
-            // Use larger font size and better font family for Korean characters for better readability
-            const fontSize = StringUtils.containsNonLatinCharacters(name) ? "13px" : "9px";
+            const fontSize = StringUtils.containsNonLatinCharacters(name) ? "11px" : "9px";
             this.playerNameText = new Text(scene, 0, playerNameY, name, {
-                fontFamily: '"Press Start 2P", "Poppins", "Roboto", "Arial", sans-serif',
+                fontFamily: '"Poppins", "Roboto", "Arial", sans-serif',
                 fontSize,
-                strokeThickness: 1.2,
+                strokeThickness: 1,
                 stroke: "#14304C",
             });
 
-            this.playerNameText.setOrigin(0.5).setDepth(DEPTH_INGAME_TEXT_INDEX);
+            this.playerNameText.setOrigin(0.5).setDepth(DEPTH_INGAME_TEXT_INDEX).setResolution(2);
             this.add([this.playerNameText]);
 
             // Reposition status dot and megaphone icon
