@@ -206,7 +206,7 @@
                 <div
                     class="font-bold text-white leading-5 whitespace-nowrap select-none text-base @sm/actions:text-sm @xl/actions:text-base order-last @xl/actions:order-first flex items-center"
                 >
-                    {userName}
+                    오늘도 갓생! {userName}님
                 </div>
                 <div class="text-xxs bold whitespace-nowrap select-none flex items-center">
                     <div
