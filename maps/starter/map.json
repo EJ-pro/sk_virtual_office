@@ -326,6 +326,108 @@
                  "width":32,
                  "x":448,
                  "y":64
+                }, 
+                {
+                 "class":"area",
+                 "height":32,
+                 "id":11,
+                 "name":"Classroom 1",
+                 "properties":[
+                        {
+                         "name":"exitSceneUrl",
+                         "type":"string",
+                         "value":"classroom1.json"
+                        }],
+                 "rotation":0,
+                 "visible":true,
+                 "width":32,
+                 "x":32,
+                 "y":32
+                }, 
+                {
+                 "class":"area",
+                 "height":32,
+                 "id":12,
+                 "name":"Classroom 2",
+                 "properties":[
+                        {
+                         "name":"exitSceneUrl",
+                         "type":"string",
+                         "value":"classroom2.json"
+                        }],
+                 "rotation":0,
+                 "visible":true,
+                 "width":32,
+                 "x":32,
+                 "y":96
+                }, 
+                {
+                 "class":"area",
+                 "height":32,
+                 "id":13,
+                 "name":"Classroom 3",
+                 "properties":[
+                        {
+                         "name":"exitSceneUrl",
+                         "type":"string",
+                         "value":"classroom3.json"
+                        }],
+                 "rotation":0,
+                 "visible":true,
+                 "width":32,
+                 "x":32,
+                 "y":160
+                }, 
+                {
+                 "class":"area",
+                 "height":32,
+                 "id":14,
+                 "name":"Classroom 4",
+                 "properties":[
+                        {
+                         "name":"exitSceneUrl",
+                         "type":"string",
+                         "value":"classroom4.json"
+                        }],
+                 "rotation":0,
+                 "visible":true,
+                 "width":32,
+                 "x":32,
+                 "y":224
+                }, 
+                {
+                 "class":"area",
+                 "height":32,
+                 "id":15,
+                 "name":"Classroom 5",
+                 "properties":[
+                        {
+                         "name":"exitSceneUrl",
+                         "type":"string",
+                         "value":"classroom5.json"
+                        }],
+                 "rotation":0,
+                 "visible":true,
+                 "width":32,
+                 "x":32,
+                 "y":288
+                }, 
+                {
+                 "class":"area",
+                 "height":32,
+                 "id":16,
+                 "name":"Classroom 6",
+                 "properties":[
+                        {
+                         "name":"exitSceneUrl",
+                         "type":"string",
+                         "value":"classroom6.json"
+                        }],
+                 "rotation":0,
+                 "visible":true,
+                 "width":32,
+                 "x":32,
+                 "y":352
                 }],
          "opacity":1,
          "type":"objectgroup",
