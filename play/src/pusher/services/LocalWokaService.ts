@@ -1,5 +1,7 @@
 import type { WokaDetail, WokaList } from "@workadventure/messages";
 import { wokaPartNames } from "@workadventure/messages";
+import fs from "fs";
+import path from "path";
 import type { WokaServiceInterface } from "./WokaServiceInterface";
 
 class LocalWokaService implements WokaServiceInterface {
@@ -7,13 +9,14 @@ class LocalWokaService implements WokaServiceInterface {
      * Returns the list of all available Wokas & Woka Parts for the current user.
      */
     async getWokaList(roomUrl: string, token: string): Promise<WokaList | undefined> {
-        // "import" does not support loading JSON files
-        // eslint-disable-next-line @typescript-eslint/no-require-imports
-        const wokaData: WokaList = await require("../data/woka.json");
-        if (!wokaData) {
+        try {
+            const data = fs.readFileSync(path.resolve(__dirname, "../data/woka.json"), "utf8");
+            const wokaData: WokaList = JSON.parse(data);
+            return wokaData;
+        } catch (e) {
+            console.error("Failed to load woka.json:", e);
             return undefined;
         }
-        return wokaData;
     }
 
     /**
@@ -25,9 +28,10 @@ class LocalWokaService implements WokaServiceInterface {
      * If one of the textures cannot be found, undefined is returned (and the user should be redirected to Woka choice page!)
      */
     async fetchWokaDetails(textureIds: string[]): Promise<WokaDetail[] | undefined> {
-        // "import" does not support loading JSON files
-        // eslint-disable-next-line @typescript-eslint/no-require-imports
-        const wokaData: WokaList = await require("../data/woka.json");
+        const wokaData = await this.getWokaList("", "");
+        if (!wokaData) {
+            return undefined;
+        }
         const textures = new Map<string, string>();
         const searchIds = new Set(textureIds);
 
