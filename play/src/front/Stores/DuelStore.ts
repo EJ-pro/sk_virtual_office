@@ -38,7 +38,7 @@ function createDuelStore() {
             update(state => {
                 const newHits = state.myHits + 1;
                 if (newHits >= 5) {
-                    return { ...state, status: "FINISHED", myHits: newHits, winnerName: state.opponentName };
+                    return { ...state, status: "FINISHED", myHits: newHits, winnerName: "Me" };
                 }
                 return { ...state, myHits: newHits };
             });
@@ -47,7 +47,7 @@ function createDuelStore() {
             update(state => {
                 const newHits = state.opponentHits + 1;
                 if (newHits >= 5) {
-                    return { ...state, status: "FINISHED", opponentHits: newHits, winnerName: "Me" }; // "Me" will be replaced by actual name in UI
+                    return { ...state, status: "FINISHED", opponentHits: newHits, winnerName: state.opponentName };
                 }
                 return { ...state, opponentHits: newHits };
             });

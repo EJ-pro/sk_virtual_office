@@ -32,9 +32,11 @@ export class EmoteManager {
                 } else if (event.emote === "duel_accept") {
                     duelStore.startDuel();
                 } else if (event.emote === "duel_hit") {
-                    // if someone else emits duel_hit, it means THEY got hit.
-                    // (Assuming symmetric logic for now)
-                    duelStore.addOpponentHit();
+                    const myUuid = localUserStore.getLocalUser()?.uuid;
+                    if (event.actorUserId !== myUuid) {
+                        // Someone else is saying they hit someone. In 1:1, that someone is ME.
+                        duelStore.addOpponentHit();
+                    }
                 } else {
                     actor.playEmote(event.emote);
                 }

@@ -774,7 +774,7 @@ export abstract class Character extends Container implements OutlineableInterfac
                     const dist = Phaser.Math.Distance.Between(ball.x, ball.y, opponentActor.x, opponentActor.y);
                     if (dist < 32) {
                         hitDetected = true;
-                        // Emit a hit event for others to see
+                        // Emit a hit event for others to see (specifically the hit person)
                         this.scene.connection?.emitEmoteEvent("duel_hit");
                         duelStore.addMyHit();
                     }
