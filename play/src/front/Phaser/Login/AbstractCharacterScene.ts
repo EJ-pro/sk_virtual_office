@@ -1,3 +1,4 @@
+import { loaderVisibleStore } from "../../Stores/LoaderStore";
 import { PlayerTextures } from "../Entity/PlayerTextures";
 import { SuperLoaderPlugin } from "../Services/SuperLoaderPlugin";
 import { gameManager } from "../Game/GameManager";
@@ -18,6 +19,7 @@ export abstract class AbstractCharacterScene extends ResizableScene {
     }
 
     create() {
+        loaderVisibleStore.set(false);
         if (gameManager.currentStartedRoom.backgroundColor != undefined) {
             this.cameras.main.setBackgroundColor(gameManager.currentStartedRoom.backgroundColor);
         }

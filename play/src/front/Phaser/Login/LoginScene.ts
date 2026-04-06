@@ -1,3 +1,4 @@
+import { loaderVisibleStore } from "../../Stores/LoaderStore";
 import { loginSceneVisibleIframeStore, loginSceneVisibleStore } from "../../Stores/LoginSceneStore";
 import { localUserStore } from "../../Connection/LocalUserStore";
 import { connectionManager } from "../../Connection/ConnectionManager";
@@ -23,6 +24,7 @@ export class LoginScene extends ResizableScene {
     preload() {}
 
     create() {
+        loaderVisibleStore.set(false);
         loginSceneVisibleIframeStore.set(false);
         /*
         //If authentication is mandatory, push authentication iframe

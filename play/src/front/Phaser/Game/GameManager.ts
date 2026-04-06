@@ -179,26 +179,21 @@ export class GameManager {
         }
 
         if (this.playerName && localUserStore.getAuthToken() && shouldShowPwaInstall) {
-            loaderVisibleStore.set(false);
             return PwaInstallSceneName;
         } else if (
             !this.playerName ||
             (this.startRoom.authenticationMandatory && !localUserStore.getAuthToken()) ||
             nextScene === "loginScene"
         ) {
-            loaderVisibleStore.set(false);
             return LoginSceneName;
         } else if (nextScene === "selectCharacterScene") {
-            loaderVisibleStore.set(false);
             return SelectCharacterSceneName;
         } else if (nextScene === "selectCompanionScene") {
-            loaderVisibleStore.set(false);
             return SelectCompanionSceneName;
         } else if (
             (preferredVideoInputDeviceId === undefined || preferredAudioInputDeviceId === undefined) &&
             !this.startRoom.skipCameraPage
         ) {
-            loaderVisibleStore.set(false);
             return EnableCameraSceneName;
         } else {
             if (preferredVideoInputDeviceId !== "") {
