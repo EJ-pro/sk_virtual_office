@@ -150,16 +150,64 @@
                         "position": 23
                     },
                     {
+                        "id": "po0",
+                        "name": "po0",
+                        "url": "resources/characters/pipoya/Po 01-0.png",
+                        "position": 24
+                    },
+                    {
                         "id": "po1",
                         "name": "po1",
                         "url": "resources/characters/pipoya/Po 01-1.png",
-                        "position": 24
+                        "position": 25
                     },
                     {
                         "id": "po2",
                         "name": "po2",
                         "url": "resources/characters/pipoya/Po 01-2.png",
                         "position": 25
+                    },
+                    {
+                        "id": "po3",
+                        "name": "po3",
+                        "url": "resources/characters/pipoya/Po 01-3.png",
+                        "position": 26
+                    },
+                    {
+                        "id": "po4",
+                        "name": "po4",
+                        "url": "resources/characters/pipoya/Po 01-4.png",
+                        "position": 27
+                    },
+                    {
+                        "id": "po5",
+                        "name": "po5",
+                        "url": "resources/characters/pipoya/Po 01-5.png",
+                        "position": 28
+                    },
+                    {
+                        "id": "po6",
+                        "name": "po6",
+                        "url": "resources/characters/pipoya/Po 01-6.png",
+                        "position": 29
+                    },
+                    {
+                        "id": "po7",
+                        "name": "po7",
+                        "url": "resources/characters/pipoya/Po 01-7.png",
+                        "position": 30
+                    },
+                    {
+                        "id": "po8",
+                        "name": "po8",
+                        "url": "resources/characters/pipoya/Po 01-8.png",
+                        "position": 31
+                    },
+                    {
+                        "id": "po9",
+                        "name": "po9",
+                        "url": "resources/characters/pipoya/Po 01-9.png",
+                        "position": 32
                     }
                 ]
             }
