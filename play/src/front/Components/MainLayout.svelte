@@ -262,7 +262,7 @@
 
                 <div
                     transition:fly={{ x: 210, duration: 500 }}
-                    class="absolute bottom-0 w-full h-fit max-h-[calc(100dvh-100px)] md:top-0 md:right-0 md:w-fit flex flex-col gap-2 items-end justify-start p-0 m-0 mr-3 overflow-y-auto no-scroll-bar"
+                    class="absolute bottom-4 left-0 right-0 w-full px-4 md:px-0 md:inset-y-0 md:right-6 md:left-auto md:w-fit flex flex-col gap-4 items-end justify-center pointer-events-none transition-all"
                 >
                     {#if $requestVisitCardsStore}
                         <VisitCard visitCardUrl={$requestVisitCardsStore} />
