@@ -13,27 +13,27 @@ import { ADMIN_API_URL } from "../enums/EnvironmentVariable";
 import { adminService } from "./AdminService";
 
 export const MetaTagsDefaultValue: RequiredMetaTagsData = {
-    title: "WorkAdventure",
+    title: "SK네트웍스 Family AI 캠프",
     description:
-        "Organize your online event in WorkAdventure to recreate spontaneous social interactions. Connect, collaborate and have fun with your teammates and attendees.",
-    author: "WorkAdventure team",
-    provider: "WorkAdventure",
+        "SK네트웍스 Family AI 캠프 - WorkAdventure 기반 가상 오피스",
+    author: "PlayData",
+    provider: "SK네트웍스",
     favIcons: [
         {
             rel: "icon",
-            sizes: "512x512",
-            src: "/static/images/favicons/favicon-512x512.svg",
+            sizes: "32x32",
+            src: "/static/images/favicons/playdata_icon.png",
         },
     ],
     manifestIcons: [
         {
-            src: "/static/images/favicons/icon-512x512.png",
-            sizes: "512x512",
+            src: "/static/images/favicons/playdata_icon.png",
+            sizes: "192x192",
             type: "image/png",
         },
     ],
-    appName: "WorkAdventure",
-    shortAppName: "WA",
+    appName: "SK네트웍스 Family AI 캠프",
+    shortAppName: "SK AI Camp",
     themeColor: "#1B2A41",
     cardImage: "https://workadventu.re/images/general/logo-og.png",
 };
