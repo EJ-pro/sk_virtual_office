@@ -409,7 +409,8 @@ export class RemotePlayer extends Character implements ActivatableInterface {
             actionName: "1:1 대결 신청",
             protected: false,
             priority: 4,
-            style: "bg-gradient-to-r from-red-600/40 to-blue-600/40 hover:from-red-600/60 hover:to-blue-600/60 text-white font-bold",
+            style: "bg-white/10 hover:bg-white/30",
+
             callback: () => {
                 this.scene.connection?.emitEmoteEvent(`duel_request:${this.userUuid}`);
                 duelStore.requestDuel(this.userId, this.playerName);

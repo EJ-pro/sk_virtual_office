@@ -258,7 +258,8 @@
             {/if}
 
             <ExternalComponents zone="popup" />
-            {#if $requestVisitCardsStore || $wokaMenuStore || $actionsMenuStore || $meetingInvitationRequestStore}
+            {#if $requestVisitCardsStore || $wokaMenuStore || $actionsMenuStore || $meetingInvitationRequestStore || $duelStore.status === "RECEIVED_REQUEST"}
+
                 <div
                     transition:fly={{ x: 210, duration: 500 }}
                     class="absolute bottom-0 w-full h-fit max-h-[calc(100dvh-100px)] md:top-0 md:right-0 md:w-fit flex flex-col gap-2 items-end justify-start p-0 m-0 mr-3 overflow-y-auto no-scroll-bar"
@@ -275,19 +276,17 @@
                     {#if $meetingInvitationRequestStore}
                         <MeetingInvitationPopup />
                     {/if}
-                    {#if $duelStore.status === "RECEIVED_REQUEST"}
-                        <DuelRequestPopup />
-                    {/if}
-                </div>
-            {/if}
-            <DuelHUD />
             <ExternalComponents zone="centeredPopup" />
-
 
             <ExplorerMenu />
         </section>
+        {#if $duelStore.status === "RECEIVED_REQUEST"}
+            <DuelRequestPopup />
+        {/if}
+        <DuelHUD />
     </div>
 </div>
+
 
 <style lang="scss">
     @use "../style/breakpoints.scss" as *;

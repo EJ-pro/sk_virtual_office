@@ -1,6 +1,8 @@
 <script lang="ts">
     import { duelStore } from "../../Stores/DuelStore";
     import { gameManager } from "../../Phaser/Game/GameManager";
+    import { fade } from "svelte/transition";
+
 
     $: request = $duelStore;
 
@@ -15,8 +17,14 @@
 </script>
 
 <div
-    class="m-auto my-0 h-fit min-h-fit max-w-lg min-w-48 max-sm:max-w-[89%] z-50 bg-contrast/80 transition-all backdrop-blur rounded-lg pointer-events-auto overflow-hidden md:mr-0 border border-primary/30 shadow-xl"
+    class="fixed inset-0 z-[1100] flex items-center justify-center p-4 pointer-events-none"
+    transition:fade
 >
+    <div
+        class="bg-contrast/90 backdrop-blur-xl rounded-2xl border-2 border-primary/30 shadow-[0_0_50px_rgba(0,0,0,0.5)] max-w-sm w-full pointer-events-auto overflow-hidden transform hover:scale-[1.02] transition-transform"
+        data-testid="duel-request-popup"
+    >
+
     <div class="p-4 flex flex-col gap-4">
         <div class="flex items-start gap-3">
             <div class="flex-1 min-w-0 pt-0.5">
@@ -44,5 +52,7 @@
         >
             거절
         </button>
+    </div>
+        </div>
     </div>
 </div>
