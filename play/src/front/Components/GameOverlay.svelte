@@ -77,11 +77,13 @@
         <ErrorDialog />
     </div>
 {:else if $loginSceneVisibleStore}
-    <div class="absolute h-dvh w-dvw overflow-y-auto">
+    <div class="absolute h-dvh w-dvw overflow-y-auto z-[100]">
+        <div class="bg-red-500 text-white p-2 absolute top-0 left-0 z-[101]">UI LAYER TEST: LOGIN VISIBLE</div>
         <LoginScene {game} />
     </div>
 {:else if $selectCharacterSceneVisibleStore}
-    <div class="absolute h-dvh w-dvw overflow-y-auto">
+    <div class="absolute h-dvh w-dvw overflow-y-auto z-[100]">
+        <div class="bg-red-500 text-white p-2 absolute top-0 left-0 z-[101]">UI LAYER TEST: WOKA VISIBLE</div>
         <WokaScene />
     </div>
 {:else if $selectCompanionSceneVisibleStore}
