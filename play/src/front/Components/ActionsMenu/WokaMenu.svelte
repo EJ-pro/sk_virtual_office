@@ -75,7 +75,7 @@
 
 {#if wokaMenuData}
     <div
-        class="m-auto my-0 h-fit min-h-fit max-w-lg min-w-48 max-sm:max-w-[89%] z-[1100] bg-contrast/80 transition-all backdrop-blur rounded-lg pointer-events-auto md:mr-0"
+        class="h-fit min-h-fit max-w-lg min-w-48 max-sm:max-w-[89%] z-[1100] bg-contrast/80 transition-all backdrop-blur rounded-lg pointer-events-auto"
         data-testid="actions-menu"
     >
         <div>
