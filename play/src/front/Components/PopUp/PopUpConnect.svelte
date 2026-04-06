@@ -3,10 +3,11 @@
     import LL from "../../../i18n/i18n-svelte";
     import { popupStore } from "../../Stores/PopupStore";
     import PopUpContainer from "./PopUpContainer.svelte";
+    import { triggerInternalLogin } from "../../Utils/AuthUtils";
 
     function goToLogin() {
         analyticsClient.login();
-        window.location.href = "/login";
+        triggerInternalLogin();
         popupStore.removePopup("popupConnect");
     }
 </script>

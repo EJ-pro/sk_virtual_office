@@ -31,9 +31,9 @@
         totoListOpenedId.set(new Set($totoListOpenedId));
     }
 
-    function goToLoginPage() {
+    function goToLogin() {
         analyticsClient.login();
-        window.location.href = "/login";
+        triggerInternalLogin();
     }
 
     onMount(() => {

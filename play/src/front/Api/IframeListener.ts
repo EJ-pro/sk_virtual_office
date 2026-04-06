@@ -1,4 +1,5 @@
 import { Subject } from "rxjs";
+import { triggerInternalLogin } from "../Utils/AuthUtils";
 import { availabilityStatusToJSON } from "@workadventure/messages";
 import type { BanEvent, ChatEvent } from "@workadventure/shared-utils";
 import { KLAXOON_ACTIVITY_PICKER_EVENT } from "@workadventure/shared-utils";
@@ -555,7 +556,7 @@ class IframeListener {
                         handleOpenMenuEvent(iframeEvent.data.key);
                     } else if (iframeEvent.type == "login") {
                         analyticsClient.login();
-                        window.location.href = "/login";
+                        triggerInternalLogin();
                     } else if (iframeEvent.type == "redirectPricing") {
                         if (connectionManager.currentRoom && connectionManager.currentRoom.pricingUrl) {
                             window.location.href = connectionManager.currentRoom.pricingUrl;

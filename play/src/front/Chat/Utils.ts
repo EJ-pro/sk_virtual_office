@@ -1,4 +1,5 @@
 import * as Sentry from "@sentry/svelte";
+import { triggerInternalLogin } from "../Utils/AuthUtils";
 import { openModal } from "svelte-modals";
 import { get } from "svelte/store";
 import { analyticsClient } from "../Administration/AnalyticsClient";
@@ -62,7 +63,7 @@ export const sendRedirectPricing = () => {
 
 export const sendLogin = () => {
     analyticsClient.login();
-    window.location.href = "/login";
+    triggerInternalLogin();
 };
 
 export const openTab = (url: string) => {

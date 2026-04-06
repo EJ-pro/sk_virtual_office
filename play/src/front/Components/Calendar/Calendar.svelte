@@ -48,9 +48,9 @@
         return returnValue;
     }
 
-    function goToLoginPage() {
+    function goToLogin() {
         analyticsClient.login();
-        window.location.href = "/login";
+        triggerInternalLogin();
     }
 </script>
 

@@ -6,9 +6,10 @@
 
     export let isOpen: boolean;
 
-    const goToLoginPage = () => {
-        analyticsClient.login();
-        window.location.href = "/login";
+    import { triggerInternalLogin } from "../../Utils/AuthUtils";
+
+    function goToLogin() {
+        triggerInternalLogin();
     };
 </script>
 

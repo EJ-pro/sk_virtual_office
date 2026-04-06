@@ -4,13 +4,15 @@
     import { analyticsClient } from "../../../Administration/AnalyticsClient";
     import { IconUserCircle } from "@wa-icons";
 
+    import { triggerInternalLogin } from "../../../Utils/AuthUtils";
+
     export let first: boolean | undefined = undefined;
     export let last: boolean | undefined = undefined;
     export let classList: string | undefined = undefined;
 
     function goToLogin() {
         analyticsClient.login();
-        window.location.href = "/login";
+        triggerInternalLogin();
     }
 </script>
 
