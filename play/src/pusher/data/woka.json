@@ -148,6 +148,12 @@
                         "name": "female12",
                         "url": "resources/characters/pipoya/su4 Student fmale 12.png",
                         "position": 23
+                    },
+                    {
+                        "id": "po1",
+                        "name": "po1",
+                        "url": "resources/characters/pipoya/Po 01-1.png",
+                        "position": 24
                     }
                 ]
             }
