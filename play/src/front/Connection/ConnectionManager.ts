@@ -158,13 +158,12 @@ class ConnectionManager {
         const tokenTmp = localUserStore.getAuthToken();
         //remove token in localstorage
         localUserStore.setAuthToken(null);
-        //user logout, set connected store for menu at false (actually don't do it because we are going to redirect and
-        // it shortly displays the "sign in" button before redirect happens)
-        //userIsConnected.set(false);
+        userIsConnected.set(false);
+        localUserStore.setName("");
 
-        // check if we are in a room
-        if (!ENABLE_OPENID || !this._currentRoom) {
-            window.location.assign("/login");
+        // check if we are in a room and have a token to logout from OIDC
+        if (!ENABLE_OPENID || !this._currentRoom || !tokenTmp) {
+            window.location.assign("/");
             return;
         }
         // redirect to logout url
