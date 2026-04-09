@@ -99,24 +99,6 @@
         "name": "po9",
         "behavior": "dog",
         "url": "resources/characters/pipoya/Po 01-9.png"
-      },
-      {
-        "id": "blossom1",
-        "name": "blossom1",
-        "behavior": "dog",
-        "url": "resources/characters/pipoya/blossom 01-1.png"
-      },
-      {
-        "id": "blossom2",
-        "name": "blossom2",
-        "behavior": "dog",
-        "url": "resources/characters/pipoya/blossom 01-2.png"
-      },
-      {
-        "id": "blossom3",
-        "name": "blossom3",
-        "behavior": "dog",
-        "url": "resources/characters/pipoya/blossom 01-3.png"
       }
     ]
   }
