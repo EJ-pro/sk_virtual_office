@@ -208,6 +208,24 @@
                         "name": "po9",
                         "url": "resources/characters/pipoya/Po 01-9.png",
                         "position": 32
+                    },
+                    {
+                        "id": "blossom1",
+                        "name": "blossom1",
+                        "url": "resources/characters/pipoya/blossom 01-1.png",
+                        "position": 33
+                    },
+                    {
+                        "id": "blossom2",
+                        "name": "blossom2",
+                        "url": "resources/characters/pipoya/blossom 01-2.png",
+                        "position": 34
+                    },
+                    {
+                        "id": "blossom3",
+                        "name": "blossom3",
+                        "url": "resources/characters/pipoya/blossom 01-3.png",
+                        "position": 35
                     }
                 ]
             }
